@@ -1,0 +1,28 @@
+{
+  "name": "Doodle-Buddy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doodle-Buddy/Doodle-Buddy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Doodle-Buddy/Doodle-Buddy/issues"
+  },
+  "homepage": "https://github.com/Doodle-Buddy/Doodle-Buddy#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.15.0",
+    "passport": "^0.4.0",
+    "sequelize": "^4.26.0",
+    "socket.io": "^2.0.4"
+  }
+}
