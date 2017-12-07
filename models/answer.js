@@ -22,6 +22,3 @@ module.exports = function(sequelize, Sequelize) {
 
   return Answer;
 };
-
-a
-sdfasdfsadfasdf
