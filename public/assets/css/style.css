@@ -1,0 +1,11 @@
+html, body {
+    background-color: #FFF4D4;
+}
+#header {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 80px;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #EB5757;
+    color: #FFF4D4;
+    
+}
