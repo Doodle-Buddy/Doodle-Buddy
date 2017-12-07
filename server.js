@@ -13,10 +13,10 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-const routes = require("./routes/index")
+const routes = require("./routes/index");
 
 app.listen(PORT, () => { 
     console.log(`App listening on port ${PORT}`);
 });
 
-app.use("/", routes)
+app.use("/", routes);
