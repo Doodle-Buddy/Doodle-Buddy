@@ -15,6 +15,7 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING,
       allowNull: true,
       len: [1, 50]
+    }
     },{
     timestamps: false
   
