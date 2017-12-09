@@ -12,9 +12,9 @@ var db = require("./models");
 
 // Routes
 // =============================================================
-require("./routes/answer-api-routes.js")(app);
-require("./routes/user-api-routes.js")(app);
-require("./routes/html-routes.js")(app);
+// require("./routes/answer-api-routes.js")(app);
+// require("./routes/user-api-routes.js")(app);
+// require("./routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
