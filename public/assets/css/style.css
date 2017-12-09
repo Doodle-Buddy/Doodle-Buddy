@@ -32,7 +32,7 @@ body {
     position: relative
 }
 
-.field {
+.input-field {
     position: absolute;
     bottom: 0;
     width: 100%;
