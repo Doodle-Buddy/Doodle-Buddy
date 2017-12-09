@@ -1,12 +1,12 @@
 // var canvas = document.getElementById('myCanvas');
 // var ctx = canvas.getContext('2d');
-var canvas
-var ctx
-var flag = false
-var prevX = 0
-var currX = 0
-var prevY = 0
-var currY = 0
+var canvas;
+var ctx;
+var flag = false;
+var prevX = 0;
+var currX = 0;
+var prevY = 0;
+var currY = 0;
 var dot_flag = false;
 
 var x = "black";
