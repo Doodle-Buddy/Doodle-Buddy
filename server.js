@@ -1,29 +1,14 @@
+// Dependencies ================================================
+const express = require("express");
+const bodyParser = require("body-parser");
+const socket = require('socket.io');
 
-// *****************************************************************************
-// Server.js - This file is the initial starting point for the Node/Express server.
-//
-// ******************************************************************************
-// *** Dependencies
-// =============================================================
-var express = require("express");
-var bodyParser = require("body-parser");
-
-// Sets up the Express App
-// =============================================================
-var app = express();
-var PORT = process.env.PORT || 3000;
+//local variables ==============================================
+const PORT = process.env.PORT || 3000;
+const app = express();
 
 // Requiring our models for syncing
 var db = require("./models");
-
-// Sets up the Express app to handle data parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-
-// Static directory
-app.use(express.static("public"));
 
 // Routes
 // =============================================================
@@ -39,3 +24,56 @@ db.sequelize.sync({ force: true }).then(function() {
   });
 });
 
+// Sets up the Express app to handle data parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+
+
+// server setup for public files, handlebars and routes ==============================================
+
+app.use(express.static("./public"));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+const routes = require("./routes/index");
+
+// listen to to a port ==============================================
+// - Danny: I commented this out but idk if we need this for later -- the io varibale has the listener though. 
+// app.listen(PORT, () => { 
+//     console.log(`App listening on port ${PORT}`);
+// });
+
+// following the socketIO docs.. i see them put the listener in the scoket function 
+const io = socket(app.listen(PORT, () => { 
+    console.log(`App listening on port ${PORT}`);
+}));
+
+// this is a new connection trigger for the socket
+io.sockets.on("connection", function(socket){
+    // connections have an id - we can use this to track clients. 
+    console.log(socket.id);
+    console.log("socket is connected!");
+
+    // when we recieve data about the mouse from the client do a function. 
+    socket.on("mouse", function(data){
+        // need to send out (broadcast) the data to the client. 
+        socket.broadcast.emit("mouse", data);
+    })
+})
+
+app.use("/", routes);
+
+io.on("connection", socket => {
+    socket.emit("news", {hello: "world"});
+    socket.on("my other event", data => {
+        console.log(data);
+    });
+});
