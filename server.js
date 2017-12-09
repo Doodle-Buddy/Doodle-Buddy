@@ -30,7 +30,7 @@ app.set("view engine", "handlebars");
 
 // Routes
 // =============================================================
-const routes = require("./routes/index")(app);
+//const routes = require("./routes/index")(app);
 require("./routes/answer-api-routes.js")(app);
 require("./routes/html-routes.js")(app);
 require("./routes/user-api-routes.js")(app);
