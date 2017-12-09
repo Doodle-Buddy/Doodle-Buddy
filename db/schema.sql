@@ -20,3 +20,5 @@ CREATE TABLE users
 	password varchar(15) NULL,
 	PRIMARY KEY (id)
 );
+
+
