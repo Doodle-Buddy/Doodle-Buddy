@@ -9,6 +9,7 @@ const app = express();
 
 
 // server setup for public files, handlebars and routes ==============================================
+
 app.use(express.static("./public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +19,7 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-const routes = require("./routes/index")
+const routes = require("./routes/index");
 
 // listen to to a port ==============================================
 // - Danny: I commented this out but idk if we need this for later -- the io varibale has the listener though. 
@@ -44,4 +45,11 @@ io.sockets.on("connection", function(socket){
     })
 })
 
-app.use("/", routes)
+app.use("/", routes);
+
+io.on("connection", socket => {
+    socket.emit("news", {hello: "world"});
+    socket.on("my other event", data => {
+        console.log(data);
+    });
+});

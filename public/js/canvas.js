@@ -6,6 +6,7 @@ var prevX = 0
 var currX = 0
 var prevY = 0
 var currY = 0
+
 var dot_flag = false;
 // the socket is here -- 
 var socket; 

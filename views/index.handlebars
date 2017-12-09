@@ -1,3 +1,28 @@
-<h1>Welcome to Doddle Buddy!</h1>
+<header class="container">
+    <h1 id="header" class="brand-logo center">Doodle Buddy</h1>
 
-<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"> </canvas>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col l3">
+            <div class="user-input" id="chat">
+                <ul id="messages"></ul>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Chat" id="chat-text"type="text" class="validate">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col l6 user-input">
+            <canvas id="myCanvas" height="400px" width="630px"> </canvas>
+        </div>
+        <div class="col l3">
+            <div></div>
+        </div>
+
+    </div>
+</div>
