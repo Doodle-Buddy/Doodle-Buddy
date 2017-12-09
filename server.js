@@ -26,6 +26,7 @@ const routes = require("./routes/index")
 //     console.log(`App listening on port ${PORT}`);
 // });
 
+// following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => { 
     console.log(`App listening on port ${PORT}`);
 }));
@@ -38,7 +39,6 @@ io.sockets.on("connection", function(socket){
 
     // when we recieve data about the mouse from the client do a function. 
     socket.on("mouse", function(data){
-        console.log("data from mouse: " + data);
         // need to send out (broadcast) the data to the client. 
         socket.broadcast.emit("mouse", data);
     })
