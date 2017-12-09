@@ -8,6 +8,12 @@ var currX = 0
 var prevY = 0
 var currY = 0
 var dot_flag = false;
+// the socket is here -- 
+var socket; 
+// the client needs to connect to the socket 
+socket = io.connect('http://localhost:3000');
+// need a data object to send through the socket
+var data; 
 
 var x = "black";
 var y = 2;
@@ -36,10 +42,18 @@ function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
     ctx.lineTo(currX, currY);
+    console.log("x: " + currX + " y: " + currY);
+    data = {
+        x: currX,
+        y: currY
+    }
+    // this line here sends the current x and y of the mouse on the canvas through the socket. 
+    socket.emit("mouse", data);
     ctx.strokeStyle = x;
     ctx.lineWidth = y;
     ctx.stroke();
     ctx.closePath();
+
 }
 
 function findxy(res, e) {
@@ -72,5 +86,7 @@ function findxy(res, e) {
         }
     }
 }
+
+
 
 init();
