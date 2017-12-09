@@ -1,31 +1,31 @@
 <header class="container">
-    <h1 id="header" class="has-text-centered column">Doodle Buddy</h1>
+    <h1 id="header" class="brand-logo center">Doodle Buddy</h1>
 
-</header>
+    </header>
 
-<div class="container">
-    <div class="columns">
-        <div class="column is-one-quarter">
-            <div class="user-input" id="chat">
-                <ul id="messages"></ul>
-                <div class="field has-addons">
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Find a repository">
-                    </div>
-                    <div class="control">
-                        <a class="button is-info">
-                            Send
-                        </a>
+    <div class="container">
+        <div class="row">
+            <div class="col l3">
+                <div class="user-input" id="chat">
+                    <ul id="messages"></ul>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Find a repository">
+                        </div>
+                        <div class="control">
+                            <a class="button is-info">
+                                Send
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="column is-half">
-            <div class="user-input" id="canvas"></div>
-        </div>
-        <div class="column">
-            <div class=""></div>
-        </div>
+            <div class="col l6 user-input">
+                <canvas id="myCanvas" height="400px" width="630px"> </canvas>
+            </div>
+            <div class="col l3">
+                <div></div>
+            </div>
 
+        </div>
     </div>
-</div>
