@@ -1,13 +1,31 @@
-// var canvas = document.getElementById('myCanvas');
-// var ctx = canvas.getContext('2d');
-var canvas;
-var ctx;
-var flag = false;
-var prevX = 0;
-var currX = 0;
-var prevY = 0;
-var currY = 0;
+// set variables for the canvas. 
+var canvas
+var ctx
+var flag = false
+var prevX = 0
+var currX = 0
+var prevY = 0
+var currY = 0
+
 var dot_flag = false;
+// the socket is here -- 
+var socket; 
+// the client needs to connect to the socket 
+socket = io.connect('http://localhost:3000');
+// need a data object to send through the socket
+var dataOfLine; 
+
+//when data comes into the client from the socket we need to draw on the client. 
+socket.on("mouse", function(data){
+    console.log("RECIEVING! " + data.x)
+    ctx.beginPath();
+    ctx.moveTo(data.oldx, data.oldy);
+    ctx.lineTo(data.x, data.y);
+    ctx.strokeStyle = x;
+    ctx.lineWidth = y;
+    ctx.stroke();
+    ctx.closePath();
+})
 
 var x = "black";
 var y = 2;
@@ -36,10 +54,21 @@ function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
     ctx.lineTo(currX, currY);
+    // store the x and y positions to an object so we can send this object through the socket. 
+    dataOfLine = {
+        oldx: prevX,
+        oldy: prevY,
+        x: currX,
+        y: currY
+    }
+    // this line here sends the current x and y of the mouse on the canvas through the socket. 
+    socket.emit("mouse", dataOfLine);
+
     ctx.strokeStyle = x;
     ctx.lineWidth = y;
     ctx.stroke();
     ctx.closePath();
+
 }
 
 function findxy(res, e) {
@@ -73,4 +102,6 @@ function findxy(res, e) {
     }
 }
 
+
+// start the canvas code. 
 init();
