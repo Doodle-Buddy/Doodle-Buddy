@@ -1,5 +1,6 @@
 html, body {
-    background-color: #FFF4D4;
+    background-color: #FFEEBA;
+    
 }
 #header {
     font-family: 'Gloria Hallelujah', cursive;
@@ -8,4 +9,21 @@ html, body {
     -webkit-text-stroke-color: #EB5757;
     color: #FFF4D4;
     
+}
+
+.user-input {
+    background-color: #FFF4D4;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #EB5757;
+    border-radius: 30px;
+    height: 400px;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
 }
