@@ -1,22 +1,22 @@
 // set variables for the canvas. 
-var canvas
-var ctx
-var flag = false
-var prevX = 0
-var currX = 0
-var prevY = 0
-var currY = 0
+var canvas;
+var ctx;
+var flag = false;
+var prevX = 0;
+var currX = 0;
+var prevY = 0;
+var currY = 0;
 
 var dot_flag = false;
 // the socket is here -- 
-var socket; 
+var socket;
 // the client needs to connect to the socket 
 socket = io.connect('http://localhost:3000');
 // need a data object to send through the socket
-var dataOfLine; 
+var dataOfLine;
 
 //when data comes into the client from the socket we need to draw on the client. 
-socket.on("mouse", function(data){
+socket.on("mouse", function (data) {
     console.log("RECIEVING! " + data.x)
     ctx.beginPath();
     ctx.moveTo(data.oldx, data.oldy);
@@ -101,6 +101,13 @@ function findxy(res, e) {
         }
     }
 }
+
+
+const clearCanvas = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+document.getElementById("clear").onclick = clearCanvas;
 
 
 // start the canvas code. 
