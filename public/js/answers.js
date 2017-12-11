@@ -1,15 +1,15 @@
 var Answer = function (actualAnswer){
   //value of the answer is stored as actualAnswer
   this.actualAnswer = actualAnswer;
-  //empty array will hold all used answer ids
-  this.usedArray = [];
   //what's printed to DOM
-  this.printedAnswer
+  this.printedAnswer =
+  //whether it has been chosen correctly, starts as false
+  this.correct = false;
 
 };
 
 //==============================//
-
+/*
 //word selected during the new game passes into constructor
 //individual word is stored as object
 //Word
@@ -77,6 +77,6 @@ Word.prototype.RenderLetters = function(){
 
 
 module.exports = Word;
+*/
 
-
-module.exports = Answers;
+module.exports = Answer;

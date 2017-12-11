@@ -3,6 +3,24 @@ var db = require("../models");
 
 // Routes
 // ==============================
+
+// FUNCTIONS
+
+function answerCompare(){
+  var random;
+  random = dbAnswer[Math.floor(Math.random() * dbAnswer.length)];
+
+  for(var i = 0; i < resultArray.length; i++){
+    if(random === resultArray[i]){
+        return true;
+    }
+  }
+  return false;
+};
+
+
+// ==============================
+
 // ANSWERS
 module.exports = function(app) {
 
@@ -15,6 +33,39 @@ module.exports = function(app) {
       res.json(dbAnswer);
     });
   });
+
+// GET
+  // NEW ROUND
+  // route for getting all of the answers to start a new Round
+  app.get("/api/round/answers", function(req, res) {
+    // findAll returns all answers for use in round
+    db.Answer.findAll({
+      //don't include description as we do not need this
+      attributes: { 
+        exclude: ['description'] 
+      }
+    }).then(function(dbAnswer) {
+      
+      let resultArray = [];
+      var count = 0;
+
+      if (count < 5){
+
+        answerCompare();
+
+        if (answerCompare() === true){
+          answerCompare();
+        }else{
+          resultArray.push(random);
+          count++
+        };
+
+      }else{
+        res.json(resultArray);
+      };
+
+    });
+  });  
 
 // GET
 	// route for getting one answer by id
