@@ -6,9 +6,10 @@ var db = require("../models");
 
 // FUNCTIONS
 
-function answerCompare(){
-  var random;
-  random = dbAnswer[Math.floor(Math.random() * dbAnswer.length)];
+/*
+function answerCompare(resultArray, dbArray){
+  
+  var random = dbArray[Math.floor(Math.random() * dbArray.length)];
 
   for(var i = 0; i < resultArray.length; i++){
     if(random === resultArray[i]){
@@ -17,6 +18,34 @@ function answerCompare(){
   }
   return false;
 };
+
+function gameplay(resultArray, dbAnswer){
+
+      var count = 0;
+
+      if (count < 5){
+
+        var compare = answerCompare(resultArray, dbAnswer);
+
+        if (compare === true){
+          
+        }else{
+          resultArray.push(compare);
+          count++
+        };
+
+      }else{
+        console.log(resultArray);
+      };
+};
+
+var resultArray = [];
+//var dbAnswer = ["hello", "sneaker", "spoon", "phone", "mouse"];
+//gameplay(resultArray, dbAnswer);
+
+*/
+
+
 
 
 // ==============================
@@ -34,40 +63,6 @@ module.exports = function(app) {
     });
   });
 
-// GET
-/*
-  // NEW ROUND
-  // route for getting all of the answers to start a new Round
-  app.get("/api/round/answers", function(req, res) {
-    // findAll returns all answers for use in round
-    db.Answer.findAll({
-      //don't include description as we do not need this
-      attributes: { 
-        exclude: ['description'] 
-      }
-    }).then(function(dbAnswer) {
-      
-      let resultArray = [];
-      var count = 0;
-
-      if (count < 5){
-
-        answerCompare();
-
-        if (answerCompare() === true){
-          answerCompare();
-        }else{
-          resultArray.push(random);
-          count++
-        };
-
-      }else{
-        res.json(resultArray);
-      };
-
-    });
-  });  
-*/
 
 // GET
 	// route for getting one answer by id
