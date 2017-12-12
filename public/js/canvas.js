@@ -17,7 +17,7 @@ var dataOfLine;
 
 //when data comes into the client from the socket we need to draw on the client. 
 socket.on("mouse", function (data) {
-    console.log("RECIEVING! " + data.x)
+    //console.log("RECIEVING! " + data.x)
     ctx.beginPath();
     ctx.moveTo(data.oldx, data.oldy);
     ctx.lineTo(data.x, data.y);
@@ -25,7 +25,14 @@ socket.on("mouse", function (data) {
     ctx.lineWidth = y;
     ctx.stroke();
     ctx.closePath();
+});
+
+//when data comes into the client for the socket regarding the clear button we clear the canvas. 
+socket.on("clear", function(data){
+    //console.log("data: " + data);
+    clearCanvas();
 })
+
 
 var x = "black";
 var y = 2;
@@ -107,7 +114,10 @@ const clearCanvas = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-document.getElementById("clear").onclick = clearCanvas;
+document.getElementById("clear").onclick = function () {
+    clearCanvas();
+    socket.emit("clear", "client hit clear.");    
+};
 
 
 // start the canvas code. 

@@ -10,6 +10,11 @@ const app = express();
 // Requiring our models for syncing
 var db = require("./models");
 
+// following the socketIO docs.. i see them put the listener in the scoket function 
+const io = socket(app.listen(PORT, () => { 
+    console.log(`App listening on port ${PORT}`);
+}));
+
 // Routes
 // =============================================================
 // require("./routes/answer-api-routes.js")(app);
@@ -19,9 +24,7 @@ var db = require("./models");
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+    io;
 });
 
 // Sets up the Express app to handle data parsing
@@ -51,10 +54,7 @@ const routes = require("./routes/index");
 //     console.log(`App listening on port ${PORT}`);
 // });
 
-// following the socketIO docs.. i see them put the listener in the scoket function 
-const io = socket(app.listen(PORT, () => { 
-    console.log(`App listening on port ${PORT}`);
-}));
+
 
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
@@ -67,8 +67,7 @@ io.sockets.on("connection", function(socket){
         // need to send out (broadcast) the data to the client. 
         socket.broadcast.emit("mouse", data);
     });
-
-    socket.on("chat message", msg => {
+socket.on("chat message", msg => {
         console.log(`message: ${msg}`);
     });
 
@@ -76,3 +75,11 @@ io.sockets.on("connection", function(socket){
 
 
 app.use("/", routes);
+
+socket.on("clear", function(data){
+        socket.broadcast.emit("clear", data);
+    });
+});
+
+app.use("/", routes);
+
