@@ -10,11 +10,6 @@ const app = express();
 // Requiring our models for syncing
 var db = require("./models");
 
-// Routes
-// =============================================================
-// require("./routes/answer-api-routes.js")(app);
-// require("./routes/user-api-routes.js")(app);
-// require("./routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -30,6 +25,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
+// Routes
+// =============================================================
+require("./routes/answer-api-routes.js")(app);
+require("./routes/user-api-routes.js")(app);
+require("./routes/html-routes.js")(app);
 
 
 // server setup for public files, handlebars and routes ==============================================
@@ -51,6 +51,7 @@ const routes = require("./routes/index");
 //     console.log(`App listening on port ${PORT}`);
 // });
 
+/*
 // following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => { 
     console.log(`App listening on port ${PORT}`);
@@ -69,4 +70,12 @@ io.sockets.on("connection", function(socket){
     })
 })
 
-app.use("/", routes);
+
+
+io.on("connection", socket => {
+    socket.emit("news", {hello: "world"});
+    socket.on("my other event", data => {
+        console.log(data);
+    });
+});
+*/

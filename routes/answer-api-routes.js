@@ -35,6 +35,7 @@ module.exports = function(app) {
   });
 
 // GET
+/*
   // NEW ROUND
   // route for getting all of the answers to start a new Round
   app.get("/api/round/answers", function(req, res) {
@@ -66,6 +67,7 @@ module.exports = function(app) {
 
     });
   });  
+*/
 
 // GET
 	// route for getting one answer by id

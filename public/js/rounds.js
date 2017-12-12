@@ -17,14 +17,15 @@ var Round = function(){
 //randomAnswer is grabbed from all answers in GET call
 Round.prototype.randomAnswer = function(){
 	 	$.get("/api/round/answers", function(resultArray) {
-	      
+	  	console.log(resultArray);    
 	  });
 	};
 
 };
 
 var newRound = new Round;
-console.log(newRound);
+console.log(newround.randomAnswer());
+
 
 
 		/*
