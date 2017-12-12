@@ -44,6 +44,9 @@ body {
     width: 91%;
     margin-left: 11px;
     margin-top: 17px;
+    max-height: 250px;
+    overflow: auto;
+    
 }
 
 #messages li {
