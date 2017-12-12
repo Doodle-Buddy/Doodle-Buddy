@@ -1,7 +1,7 @@
 // Dependencies ================================================
 const express = require("express");
 const bodyParser = require("body-parser");
-const socket = require('socket.io');
+const socket = require("socket.io");
 
 //local variables ==============================================
 const PORT = process.env.PORT || 3000;
@@ -67,10 +67,19 @@ io.sockets.on("connection", function(socket){
         // need to send out (broadcast) the data to the client. 
         socket.broadcast.emit("mouse", data);
     });
-
-    socket.on("clear", function(data){
-        socket.broadcast.emit("clear", data);
+socket.on("chat message", msg => {
+        console.log(`message: ${msg}`);
     });
-})
+
+});
+
 
 app.use("/", routes);
+
+socket.on("clear", function(data){
+        socket.broadcast.emit("clear", data);
+    });
+});
+
+app.use("/", routes);
+
