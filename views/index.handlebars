@@ -1,3 +1,4 @@
+
 <header class="container">
     <h1 id="header" class="brand-logo center">Doodle Buddy</h1>
 
@@ -5,20 +6,29 @@
 
 <div class="container">
     <div class="row">
-        <div class="col l3">
+        <div class="col l4">
             <div class="user-input" id="chat">
-                <ul id="messages"></ul>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input placeholder="Chat" id="chat-text"type="text" class="validate">
+                    
+                    {{!-- <div class="input-field col s12">
+                        <input placeholder="Chat" id="chat-text" type="text" class="validate">
 
-                    </div>
+                    </div> --}}
+                    <ul id="messages"></ul>
+                    <form action="">
+                        <input id="m" autocomplete="off" class="input-field" /> <button>Send</button>
+
+                    </form>
 
                 </div>
             </div>
         </div>
         <div class="col l6 user-input" id="drawing">
-            <canvas id="myCanvas" height="400px" width="640"> </canvas>
+            
+            <canvas id="myCanvas" height="400px" width="440"> </canvas>
+            {{!-- <canvas id="myCanvas" height="400px"> </canvas> --}}
+            
+
             <a class="waves-effect waves-light btn" id="clear">Clear</a>
 
         </div>
@@ -28,3 +38,4 @@
 
     </div>
 </div>
+
