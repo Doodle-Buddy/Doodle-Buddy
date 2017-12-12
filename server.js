@@ -76,10 +76,4 @@ socket.on("chat message", msg => {
 
 app.use("/", routes);
 
-socket.on("clear", function(data){
-        socket.broadcast.emit("clear", data);
-    });
-});
-
-app.use("/", routes);
 
