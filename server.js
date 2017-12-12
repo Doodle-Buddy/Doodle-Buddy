@@ -11,7 +11,7 @@ const app = express();
 var db = require("./models");
 
 // following the socketIO docs.. i see them put the listener in the scoket function 
-const io = socket(app.listen(PORT, () => { 
+const io = socket(app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 }));
 
@@ -23,15 +23,21 @@ const io = socket(app.listen(PORT, () => {
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({
+    force: true
+}).then(function () {
     io;
 });
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use(bodyParser.json({
+    type: "application/vnd.api+json"
+}));
 
 
 
@@ -39,11 +45,15 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 const exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({
+    defaultLayout: "main"
+}));
 app.set("view engine", "handlebars");
 
 const routes = require("./routes/index");
@@ -57,23 +67,29 @@ const routes = require("./routes/index");
 
 
 // this is a new connection trigger for the socket
-io.sockets.on("connection", function(socket){
+io.sockets.on("connection", function (socket) {
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
 
     // when we recieve data about the mouse from the client do a function. 
-    socket.on("mouse", function(data){
+    socket.on("mouse", function (data) {
         // need to send out (broadcast) the data to the client. 
         socket.broadcast.emit("mouse", data);
     });
-socket.on("chat message", msg => {
+    socket.on("chat message", msg => {
+        io.emit("chat message", msg);
         console.log(`message: ${msg}`);
     });
+
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+
 
 });
 
 
+
+
 app.use("/", routes);
-
-
