@@ -59,6 +59,7 @@ module.exports = function(app) {
     // findAll returns all answers
     db.Answer.findAll({}).then(function(dbAnswer) {
       // all answers returned in callback
+      console.log(dbAnswer);
       res.json(dbAnswer);
     });
   });
