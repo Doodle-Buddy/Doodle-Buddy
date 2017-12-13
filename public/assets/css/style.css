@@ -69,7 +69,7 @@ input {
     margin-left: 10px;
 }
 
-#clear {
+.btn {
     background-color: #FFF4D4;
     color: #EB5757;
 }

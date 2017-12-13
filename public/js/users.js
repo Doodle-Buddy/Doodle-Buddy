@@ -1,8 +1,10 @@
 // chancejs stuff 
 var my_chance = new Chance();
-$(() => {
-    var username;
 
+$( () => {
+    let usernameInput = $("#username");
+    let inputMessage = $("#m");
+    let connected = false, username = null;
     const socket = io();
 
     // initialize the moddal 
@@ -14,13 +16,14 @@ $(() => {
     // on click we need to grab what the user put and if its  blank we give him a Chance.first();
     $("#submit-btn").on("click", function () {
         // checck if the form was blank. 
-        if ($("#username").val().trim() === "") {
-            username = Chance.first();
+        if (usernameInput.val().trim() === "") {
+            username = my_chance.first();
         } else {
             username = $("#username").val().trim();
-            console.log(username);
             setUsername();
         }
+            console.log(username);
+        
     })
     //Prevents input from having injected markup
     const cleanInput = input => {
@@ -34,5 +37,18 @@ $(() => {
             socket.emit('add user', username);
         }
     };
+
+    //Grabs chat message and emits to socket
+    $('form').submit(function () {
+        let message = inputMessage.val();
+        message = cleanInput(message);
+        $("#m").val("");
+        socket.emit('chat message', message);
+        return false;
+    });
+    socket.on('chat message', function (msg) {
+
+        $('#messages').append($('<li>').text(msg));
+    });
 
 });
