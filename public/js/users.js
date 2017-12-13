@@ -1,5 +1,5 @@
 // chancejs stuff 
-var my_chance = new Chance();
+var chance = new Chance();
 
 var username;
 
@@ -15,11 +15,13 @@ $('#modal1').modal('open');
 $("#submit-btn").on("click", function(){
     // checck if the form was blank. 
     if($("#username").val().trim() === ""){
-        username = Chance.first();
+        username = chance.first();
     }
 
     else{
         username = $("#username").val().trim();
     }
+    // how can i get this username and use it from another js file? -- make a constructor and then call that function to run this code about the modal else where??? 
+    console.log(username);
 })
 

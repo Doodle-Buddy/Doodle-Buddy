@@ -65,10 +65,12 @@ const routes = require("./routes/index");
 // });
 
 
-
+// Danny: I wonder if we should move all this socket code to a seperate file.. maybe after we get it workiong we should or have it as a nice to have. 
+// i think i need to put the users object outside the connect because it will get emptied everytime a socket is opened. 
+var users = {};
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
-    var users = {};
+    
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
