@@ -2,9 +2,8 @@
 
 //==============================//
 
-var Letter = require("./letters.js");
 var Word = require("./words.js");
-var Game = require("./game.js");
+var Round = require("./rounds.js");
 
 //==============================//
 
