@@ -5,27 +5,32 @@
 
 <div class="container">
     <div class="row">
-        <div class="col l3">
+        <div class="col l4 m4">
             <div class="user-input" id="chat">
-                <ul id="messages"></ul>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input placeholder="Chat" id="chat-text"type="text" class="validate">
 
-                    </div>
+                    <ul id="messages"></ul>
+                    
+                    <form action="" class="col s12">
+                        <div class="col s12 input-field">
+                            <input id="m" autocomplete="off" />
+                        </div>
+                        <div class="col s12 input-field">
+                            <button class="btn">Send</button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
         </div>
-        <div class="col l6 user-input" id="drawing">
-            <canvas id="myCanvas" height="400px" width="640"> </canvas>
-            <a class="waves-effect waves-light btn" id="clear">Clear</a>
 
-        </div>
-        <div class="col l3">
-            <div></div>
-        </div>
+        <div class="col l6 m6 user-input" id="drawing">
+            <canvas id="myCanvas" height="395px" width="400px"> </canvas>
+            <div class="row">
+                <a class="waves-effect waves-light btn" id="clear">Clear</a>
 
+            </div>
+        </div>
     </div>
 </div>
 
@@ -41,3 +46,4 @@
         </div>
     </div>
   </div>
+
