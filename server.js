@@ -90,6 +90,13 @@ io.sockets.on("connection", function(socket){
         console.log("user disconnected");
     });
 
+    //When the client emits 'add user', this listens and executes
+    socket.on('add user', username => {
+
+        socket.username = username;
+
+        console.log(socket.username);
+    })
 
 });
 
