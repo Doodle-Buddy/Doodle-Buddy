@@ -67,10 +67,14 @@ const routes = require("./routes/index");
 
 
 // this is a new connection trigger for the socket
-io.sockets.on("connection", function (socket) {
+io.sockets.on("connection", function(socket){
+    var users = {};
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
+
+    
+
 
     // when we recieve data about the mouse from the client do a function. 
     socket.on("mouse", function (data) {
