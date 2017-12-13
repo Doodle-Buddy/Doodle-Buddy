@@ -21,42 +21,52 @@ body {
 }
 
 #drawing {
-    min-width: 640px;
-    
+    /* min-width: 440px; */
 }
 
 #myCanvas {
     /* display: block; */
     /* height: 400px; */
-    width: 100%; 
-    height: 100%;
+    /* width: 100%; */
+    /* height: 100%; */
     /* max-width: 100%; */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
-
 
 #chat {
     position: relative
 }
 
-.input-field {
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 91%;
+    margin-left: 11px;
+    margin-top: 17px;
+}
+
+#messages li {
+    padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+    background: rgba(238, 238, 238, 1) ;
+}
+
+form {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 90%;
     margin-bottom: 1px;
+
+}
+
+input {
+    margin-left: 10px;
 }
 
 #clear {
     background-color: #FFF4D4;
     color: #EB5757;
 }
-
-/* form input {
-    border-radius: 30px 0 0 30px;
-    margin-left: 10px;
-    width: 85%;
-}
-form button {
-    width: 10%;
-    border-radius: 0 30px 30px 0;
-} */
