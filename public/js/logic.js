@@ -61,12 +61,14 @@ if(countdown === 0){
 //user inputs answer through chat
 //chat response is grabbed
 
-$("#submit-button").click(){
+$(".btn").click(function(event)){
 	
-	var rawGuess = $("#chat-box").val().trim();
+	event.preventDefault();
+
+	var rawGuess = $("#m").val().trim();
 	var userGuess = rawGuess.toLowerCase();
 
-	if (newGame.chosenWord.CheckWords() === true){
+	if (newGame.chosenWord.CheckWords(userGuess) === true){
 		
 		console.log("Winner!");
 		newGame();
