@@ -8,8 +8,10 @@ const morgan = require("morgan");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+
 // use morgan for loggging
 app.use(morgan('tiny'));
+
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -20,20 +22,32 @@ app.use(bodyParser.json({
     type: "application/vnd.api+json"
 }));
 
+app.use(express.static("./public"));
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // Requiring our models for syncing
 var db = require("./models");
+
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync({ force: false }).then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
 
 // following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 }));
 
-//Routes
-//=============================================================
+
+// Routes
+// =============================================================
 require("./routes/answer-api-routes.js")(app);
 require("./routes/user-api-routes.js")(app);
-//require("./routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -44,12 +58,6 @@ db.sequelize.sync({
 });
 
 // server setup for public files, handlebars and routes ==============================================
-
-app.use(express.static("./public"));
-
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
 
 const exphbs = require("express-handlebars");
 
@@ -67,9 +75,11 @@ const routes = require("./routes/index");
 // });
 
 
+
 // Danny: I wonder if we should move all this socket code to a seperate file.. maybe after we get it workiong we should or have it as a nice to have. 
 // i think i need to put the users object outside the connect because it will get emptied everytime a socket is opened. 
 var users = [];
+
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
     
@@ -82,6 +92,7 @@ io.sockets.on("connection", function(socket){
         // need to send out (broadcast) the data to the client. 
         socket.broadcast.emit("mouse", data);
     });
+
     socket.on("chat message", msg => {
         io.emit("chat message", msg);
         console.log(`message: ${msg}`);
@@ -116,8 +127,7 @@ io.sockets.on("connection", function(socket){
         console.log("user disconnected");
     });
 
-
 });
 
-
 app.use("/", routes);
+  

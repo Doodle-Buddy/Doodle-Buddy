@@ -14,9 +14,11 @@ $('.modal').modal(
 // open the model 
 $('#modal1').modal('open');
 // on click we need to grab what the user put and if its  blank we give him a Chance.first();
+
 $("#submit-btn").on("click", function(e){
     e.preventDefault();
     // checck if the form was blank. 
+
     if($("#username").val().trim() === ""){
         username = chance.first();
     }
