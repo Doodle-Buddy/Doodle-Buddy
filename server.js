@@ -37,6 +37,7 @@ db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
+});
 
 // following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => {
@@ -130,4 +131,3 @@ io.sockets.on("connection", function(socket){
 });
 
 app.use("/", routes);
-  
