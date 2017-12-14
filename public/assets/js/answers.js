@@ -1,4 +1,4 @@
-var Answer = function (actualAnswer){
+var Answers = function (actualAnswer){
   //value of the answer is stored as actualAnswer
   this.actualAnswer = actualAnswer;
   //empty array will hold all used answer ids
