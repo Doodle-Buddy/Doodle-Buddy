@@ -32,11 +32,9 @@ module.exports = function(app) {
 // POST 
   // route for saving a new user
   app.post("/api/users", function(req, res) {
-    console.log(req.body);
     // create new user
     db.User.create({
-      name: req.body.name,
-      password: req.body.password
+      name: req.body.username
     }).then(function(dbUser) {
       // new user returned in callback
       res.json(dbUser);
