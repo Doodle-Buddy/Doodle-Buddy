@@ -2,10 +2,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
+const morgan = require("morgan");
 
 //local variables ==============================================
 const PORT = process.env.PORT || 3000;
 const app = express();
+
+
+// use morgan for loggging
+app.use(morgan('tiny'));
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -23,23 +28,23 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-
 // Requiring our models for syncing
 var db = require("./models");
 
-
-
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: false }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
-
+db.sequelize.sync({
+    force: false
+}).then(function () {
+    app.listen(PORT, function () {
+        console.log("App listening on PORT " + PORT);
+    });
+});
 // following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 }));
+
 
 // Routes
 // =============================================================
@@ -53,14 +58,6 @@ db.sequelize.sync({
 }).then(function () {
     io;
 });
-
-
-// Routes
-// =============================================================
-require("./routes/answer-api-routes.js")(app);
-require("./routes/user-api-routes.js")(app);
-require("./routes/html-routes.js")(app);
-
 
 // server setup for public files, handlebars and routes ==============================================
 
@@ -80,9 +77,14 @@ const routes = require("./routes/index");
 // });
 
 
+
+// Danny: I wonder if we should move all this socket code to a seperate file.. maybe after we get it workiong we should or have it as a nice to have. 
+// i think i need to put the users object outside the connect because it will get emptied everytime a socket is opened. 
+var users = [];
+
 // this is a new connection trigger for the socket
-io.sockets.on("connection", function(socket){
-    var users = {};
+io.sockets.on("connection", function (socket) {
+
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
@@ -98,21 +100,35 @@ io.sockets.on("connection", function(socket){
         console.log(`message: ${msg}`);
     });
 
+    socket.on("clear", function (data) {
+        socket.broadcast.emit("clear", data);
+    })
+
+    socket.on("username", function (username) {
+        var exists = false;
+        var userObj = {};
+        for (i = 0; i < users.length; i++) {
+            if (users[i].username === username) {
+                users[i].socketID.push(socket.id);
+                exists = true;
+            }
+        }
+
+        if (!exists) {
+            userObj = {
+                username: username,
+                socketID: [socket.id]
+            };
+            users.push(userObj);
+        }
+        console.log(users);
+
+    })
+
     socket.on("disconnect", () => {
         console.log("user disconnected");
     });
 
-<<<<<<< HEAD
-    //When the client emits 'add user', this listens and executes
-    socket.on('add user', username => {
-
-        socket.username = username;
-
-        console.log(socket.username);
-    })
-
-=======
->>>>>>> 7b70cecf81ca33632fd700fc81c6a30e6a785f61
 });
 
-
+app.use("/", routes);
