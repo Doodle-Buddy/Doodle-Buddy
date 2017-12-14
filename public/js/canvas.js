@@ -37,6 +37,12 @@ socket.on("clear", function(data){
 var x = "black";
 var y = 2;
 
+// listening for event - username being created. 
+window.addEventListener("userCreated", function (e) {
+    console.log(e.detail);
+});
+
+
 function init() {
     canvas = document.getElementById('myCanvas');
     ctx = canvas.getContext("2d");

@@ -7,28 +7,6 @@ const socket = require("socket.io");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-// Requiring our models for syncing
-var db = require("./models");
-
-// following the socketIO docs.. i see them put the listener in the scoket function 
-const io = socket(app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-}));
-
-// Routes
-// =============================================================
-// require("./routes/answer-api-routes.js")(app);
-// require("./routes/user-api-routes.js")(app);
-// require("./routes/html-routes.js")(app);
-
-// Syncing our sequelize models and then starting our Express app
-// =============================================================
-db.sequelize.sync({
-    force: true
-}).then(function () {
-    io;
-});
-
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -40,6 +18,27 @@ app.use(bodyParser.json({
 }));
 
 
+// Requiring our models for syncing
+var db = require("./models");
+
+// following the socketIO docs.. i see them put the listener in the scoket function 
+const io = socket(app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+}));
+
+//Routes
+//=============================================================
+require("./routes/answer-api-routes.js")(app);
+require("./routes/user-api-routes.js")(app);
+//require("./routes/html-routes.js")(app);
+
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync({
+    force: true
+}).then(function () {
+    io;
+});
 
 // server setup for public files, handlebars and routes ==============================================
 
@@ -74,9 +73,6 @@ io.sockets.on("connection", function(socket){
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
-
-    
-
 
     // when we recieve data about the mouse from the client do a function. 
     socket.on("mouse", function (data) {
