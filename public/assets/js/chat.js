@@ -1,13 +1,14 @@
 $(function () {
+    var socket = io();
 
     var username;
     // listening for event - username being created. 
     window.addEventListener("userCreated", function (e) {
         console.log(e.detail);
         username = e.detail;
+        socket.emit("username", username);
     });
 
-    var socket = io();
     $('form').submit(function () {
 
         socket.emit('chat message', username + ": " + $('#m').val());
