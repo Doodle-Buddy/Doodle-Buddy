@@ -84,6 +84,10 @@ io.sockets.on("connection", function(socket){
         console.log(`message: ${msg}`);
     });
 
+    socket.on("clear", function(data){
+        socket.broadcast.emit("clear", data);
+    })
+
     socket.on("disconnect", () => {
         console.log("user disconnected");
     });
