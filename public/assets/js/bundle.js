@@ -370,7 +370,7 @@ $( () => {
     };
 
     //Grabs chat message and emits to socket
-    $('form').submit(function () {
+    $('form').submit(function (e) {
         let message = inputMessage.val();
         message = cleanInput(message);
         $("#m").val("");
