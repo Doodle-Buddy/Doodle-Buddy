@@ -1,5 +1,6 @@
 // chancejs stuff 
-var my_chance = new Chance();
+const Chance = require("chance")
+const chance = new Chance();
 
 $( () => {
     let usernameInput = $("#username");
@@ -17,7 +18,7 @@ $( () => {
     $("#submit-btn").on("click", function () {
         // checck if the form was blank. 
         if (usernameInput.val().trim() === "") {
-            username = my_chance.first();
+            username = chance.first();
         } else {
             username = $("#username").val().trim();
             setUsername();
