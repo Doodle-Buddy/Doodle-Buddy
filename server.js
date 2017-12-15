@@ -83,10 +83,48 @@ var userGuess;
 
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
+    // putting game function here. cause it needs the socket param. 
+    function aRound(){
+        console.log("the round method is called. ");
+        //we get a gameword once 2 players enter and we can start the game. 
+        game.getGameWord().then(function(fromResolve){
+            //also we need to decide who is the drawer first. 
+            if(round <= users.length){
+                drawer = users[round].username
+                drawerID = users[round].socketID[0];
+                gameWord = fromResolve;
+                
+                console.log("drawer " + drawer)
+                console.log("drawerID " + drawerID);
+
+                //lets tell the drawer he is the drawer and what the word is. 
+                socket.broadcast.to(drawerID).emit('chat message', 'You are the drawer. The word is '+ gameWord);
     
-    // connections have an id - we can use this to track clients. 
-    //console.log(socket.id);
-    //console.log("socket is connected!");
+                //now that the drawer is set and we gave him the word.. we need to listen if anyone has said taht word.    
+                socket.on("chat message", msg => {
+                    for(i=0; i<msg.length; i++){
+                        if(msg.charAt(i) === ":"){
+                            userGuess = msg.substring(i+1, msg.length).trim();
+    
+                            // if the guess that came in was the gameword they won! 
+                            if(userGuess === gameWord){
+                                io.emit("chat message", "Correct! The word was " + gameWord);
+    
+                                // go to the next round. 
+                                round++
+                                aRound();
+    
+                            }
+                        }
+                    }
+                });
+    
+            }
+            else{
+                io.emit("chat message", "Game is over.");
+            }
+        });
+    }
 
     // when we recieve data about the mouse from the client do a function. 
     socket.on("mouse", function (data) {
@@ -124,43 +162,10 @@ io.sockets.on("connection", function(socket){
 
         // check if we have 2 users to start the game. Added exists here cause username gets hit 2 times with same user which causes this to run twice... sloopy code but works so far. 
         if(users.length === 2 && exists){
-            //we get a gameword once 2 players enter and we can start the game. 
-            game.getGameWord().then(function(fromResolve){
-                //also we need to decide who is the drawer first. 
-                if(round <= users.length){
-                    drawer = users[round].username
-                    drawerID = users[round].socketID[0];
-                    gameWord = fromResolve;
-
-                    //lets tell the drawer he is the drawer and what the word is. 
-                    socket.broadcast.to(drawerID).emit('chat message', 'You are the drawer. The word is '+ gameWord);
-
-                    //now that the drawer is set and we gave him the word.. we need to listen if anyone has said taht word.    
-                    socket.on("chat message", msg => {
-                        for(i=0; i<msg.length; i++){
-                            if(msg.charAt(i) === ":"){
-                                userGuess = msg.substring(i+1, msg.length).trim();
-
-                                // if the guess that came in was the gameword they won! 
-                                if(userGuess === gameWord){
-                                    io.emit("chat message", "Correct! The word was " + gameWord);
-
-                                    // go to the next round. 
-                                    round++
-
-                                }
-                            }
-                        }
-                    });
-
-
-                }
-                else{
-                    //everyone has gone and we end the game or we keep going. 
-                }
-            });
+            // start the fisrt round. 
+            console.log("first round has started.");
+            aRound();
         }
-
    })
 
     socket.on("disconnect", () => {
