@@ -6,7 +6,7 @@ USE Doodle_db;
 CREATE TABLE answers
 (
 	id int NOT NULL AUTO_INCREMENT,
-	name varchar(15) NOT NULL,
+	answers varchar(15) NOT NULL,
 	PRIMARY KEY (id)
 );
 

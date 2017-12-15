@@ -1,56 +1,6 @@
 // Requiring models
 var db = require("../models");
 
-// Routes
-// ==============================
-
-// FUNCTIONS
-
-/*
-function answerCompare(resultArray, dbArray){
-  
-  var random = dbArray[Math.floor(Math.random() * dbArray.length)];
-
-  for(var i = 0; i < resultArray.length; i++){
-    if(random === resultArray[i]){
-        return true;
-    }
-  }
-  return false;
-};
-
-function gameplay(resultArray, dbAnswer){
-
-      var count = 0;
-
-      if (count < 5){
-
-        var compare = answerCompare(resultArray, dbAnswer);
-
-        if (compare === true){
-          
-        }else{
-          resultArray.push(compare);
-          count++
-        };
-
-      }else{
-        console.log(resultArray);
-      };
-};
-
-var resultArray = [];
-//var dbAnswer = ["hello", "sneaker", "spoon", "phone", "mouse"];
-//gameplay(resultArray, dbAnswer);
-
-*/
-
-
-
-
-// ==============================
-
-// ANSWERS
 module.exports = function(app) {
 
 // GET

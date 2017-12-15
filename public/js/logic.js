@@ -1,39 +1,43 @@
 // logic connected to the html page
 
 //==============================//
-
-var Word = require("./words.js");
-var Round = require("./rounds.js");
+// not sure if we can require on client side. the constructor is good enough. 
+// var Word = require("./words.js");
+// var Round = require("./rounds.js");
 
 //==============================//
 
 //FUNCTIONS
 //------------------------------
 
-//Timer
-function startTimer() {
-	intervalId = setInterval(decrement, 1000);
-};
+// not sure if we are doing a timer just yet. 
 
-//timer decreases in value to count down game time
-function decrement() {
-    //print countdown in #start-timer div
-    $("#start-timer").html("<h2>" + countdown + "</h2>");
+// //Timer
+// function startTimer() {
+// 	intervalId = setInterval(decrement, 1000);
+// };
 
-    //countdown decreases by 1 and stores its value
-    countdown--;
-};
+// //timer decreases in value to count down game time
+// function decrement() {
+//     //print countdown in #start-timer div
+//     $("#start-timer").html("<h2>" + countdown + "</h2>");
+
+//     //countdown decreases by 1 and stores its value
+//     countdown--;
+// };
 
 //newGame to be called at the end of each round
 function newGame() {
 	//new Round is generated and stored
   newRound = new Round();
+
+  // commenting out timer. 
   //intervalId is cleared
-  clearInterval(intervalId);
-  //reset countdown
-  countdown = 30;
-  //start timer anew
-  startTimer();
+//   clearInterval(intervalId);
+//   //reset countdown
+//   countdown = 30;
+//   //start timer anew
+//   startTimer();
 };
 
 //Global Variables
@@ -61,7 +65,7 @@ if(countdown === 0){
 //user inputs answer through chat
 //chat response is grabbed
 
-$(".btn").click(function(event)){
+$(".btn").click(function(event){
 	
 	event.preventDefault();
 
@@ -72,9 +76,8 @@ $(".btn").click(function(event)){
 		
 		console.log("Winner!");
 		newGame();
-
 	}
 
-};
+});
 
 //==============================//

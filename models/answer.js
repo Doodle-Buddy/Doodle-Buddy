@@ -1,4 +1,3 @@
-
 module.exports = function(sequelize, Sequelize) {
   var Answer = sequelize.define("Answers", {
     id: {
