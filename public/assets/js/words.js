@@ -19,7 +19,7 @@ var Word = function(actualWord){
 		};
 };
 	console.log(`actualWord: ${this.actualWord}`);
-};
+
 
 //==============================//
 

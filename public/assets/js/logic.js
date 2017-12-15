@@ -61,7 +61,7 @@ if(countdown === 0){
 //user inputs answer through chat
 //chat response is grabbed
 
-$(".btn").click(function(event)){
+$(".btn").click(function(event){
 	
 	event.preventDefault();
 
@@ -75,6 +75,6 @@ $(".btn").click(function(event)){
 
 	}
 
-};
+});
 
 //==============================//
