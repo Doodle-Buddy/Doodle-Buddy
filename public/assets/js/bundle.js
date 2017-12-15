@@ -180,7 +180,7 @@ var dot_flag = false;
 // the socket is here -- 
 var socket;
 // the client needs to connect to the socket 
-socket = io.connect('http://localhost:3000');
+socket = io.connect('https://localhost:3000');
 // need a data object to send through the socket
 var dataOfLine;
 
