@@ -28,6 +28,17 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+// server setup for public files, handlebars and routes ==============================================
+
+const exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({
+    defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
+
+const routes = require("./routes/index");
+
 // Requiring our models for syncing
 var db = require("./models");
 
@@ -40,6 +51,7 @@ const io = socket(app.listen(PORT, () => {
 // =============================================================
 require("./routes/answer-api-routes.js")(app);
 require("./routes/user-api-routes.js")(app);
+app.use("/", routes);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -48,17 +60,6 @@ db.sequelize.sync({
 }).then(function () {
     io;
 });
-
-// server setup for public files, handlebars and routes ==============================================
-
-const exphbs = require("express-handlebars");
-
-app.engine("handlebars", exphbs({
-    defaultLayout: "main"
-}));
-app.set("view engine", "handlebars");
-
-const routes = require("./routes/index");
 
 // listen to to a port ==============================================
 // - Danny: I commented this out but idk if we need this for later -- the io varibale has the listener though. 
@@ -121,4 +122,3 @@ io.sockets.on("connection", function(socket){
 
 });
 
-app.use("/", routes);
