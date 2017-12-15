@@ -1,38 +1,50 @@
 <div class = "container" id="background-image">
 
     <header class="container">
-        <h1 id="header" class="brand-logo center">Doodle Buddy</h1>
-
+        <div class ="row">
+            <div class ="col pull-l1">
+                <h1 id="header" class="brand-logo center">Doodle Buddy</h1>
+            </div>
+        </div>
     </header>
 
     <div class="container">
         <div class="row">
-            <div class="col l4 m4">
+            
+            <!-- Chat column -->
+            <div class="col l3 m4">
                 <div class="user-input" id="chat">
+
+                    <!-- Display Messages -->
                     <div class="row">
-
-                        <ul id="messages"></ul>
-                        
-                        <form action="" class="col s12">
-                            <div class="col s12 input-field">
-                                <input id="m" autocomplete="off" />
-                            </div>
-                            <div class="col s12 input-field">
-                                <button class="btn send-btn">Send</button>
-                            </div>
-                        </form>
-
+                        <div class="col s12">
+                            <ul id="messages"></ul>
+                        </div>
                     </div>
+
+                    <!-- User Input & Send -->
+                    <div class="row">
+                        <div class ="col s12">
+                            <form action="">
+                                <div class="input-field">
+                                    <input id="m" autocomplete="off" />
+                                    <button class="btn send-btn">Send</button>
+                                    <span id="start-timer">29</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col l6 m6 user-input" id="drawing">
+            <div class="col l7 m6 user-input" id="drawing">
                 <canvas id="myCanvas" height="395px" width="400px"> </canvas>
                 <div class="row">
                     <a class="waves-effect waves-light btn clear-btn" id="clear">Clear</a>
-
                 </div>
             </div>
+
         </div>
     </div>
 

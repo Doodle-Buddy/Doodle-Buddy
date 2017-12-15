@@ -1,17 +1,21 @@
 html,
 body {
-    /* background-color: #FFEEBA; */
-    /*background-image: url("ash-laminate-panels.jpg");*/
+    /* Full height */
     height: 100%;
     width: 100%;
-   
+    /* pairing font */
+    font-family: 'Lato', sans-serif;   
 }
 
 #m {
-     font-family: 'Gloria Hallelujah', cursive;
+     /* writes in pairing font */
+     font-family: 'Lato', sans-serif;   
+     margin-bottom: 0px;
+     padding-bottom: 0px;
 }
 
 #background-image{
+    /* wallpaper of pencils with lines */
     background-image: url("pencils.jpg");
 
     /* Full height */
@@ -19,18 +23,19 @@ body {
     width: 100%;
 
     /* Center and scale the image nicely */
-    background-position: center;
+    background-position: absolute;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 #header {
-    position: relative;
-    right: 310px;
+    /* main logo font */
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 80px;
+    /* stroke color */
     -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #406a6c;  /*8faaa7  3c9d96  7cc0bb  449995*/
+    -webkit-text-stroke-color: #406a6c;
+    /* inner color */
     color: #449995; 
 }
 
@@ -40,30 +45,17 @@ body {
     border-width: 2px;
     border-color: #cd8f3d;
     border-radius: 20px;
+    /* div height  */
     height: 400px;
     opacity: 0.8;
 }
 
-#drawing {
-    /* min-width: 440px; */
-}
-
-#myCanvas {
-    /* display: block; */
-    /* height: 400px; */
-    /* width: 100%; */
-    /* height: 100%; */
-    /* max-width: 100%; */
-    /* box-sizing: border-box; */
-}
-
 #chat {
-    position: relative
+    position: relative;
 }
 
 #messages {
     list-style-type: none;
-    /* margin: 0; */
     padding: 5px;
     width: 91%;
     margin-left: 11px;
@@ -104,12 +96,26 @@ input {
     position: relative;
     bottom: 8px;
     opacity: 1.0;
+    margin-right:10px;
+}
+
+#start-timer {
+    font: 35px bolder;
+    font-family: 'Gloria Hallelujah', cursive;
+    padding-left: 25px;
 }
 
 .clear-btn {
     margin: 0px;
     position: relative;
-    bottom: 50px;
-    left: 10px;
+    bottom: 55px;
+    left: 20px;
     opacity: 1.0;
 }
+
+
+.input-field{
+    margin-top: 0px;
+    padding-left: 20px;
+}
+
