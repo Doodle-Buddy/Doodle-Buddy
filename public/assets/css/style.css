@@ -1,23 +1,47 @@
 html,
 body {
-    background-color: #FFEEBA;
+    /* background-color: #FFEEBA; */
+    /*background-image: url("ash-laminate-panels.jpg");*/
+    height: 100%;
+    width: 100%;
+   
+}
+
+#m {
+     font-family: 'Gloria Hallelujah', cursive;
+}
+
+#background-image{
+    background-image: url("pencils.jpg");
+
+    /* Full height */
+    height: 100%; 
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #header {
+    position: relative;
+    right: 310px;
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 80px;
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: #EB5757;
-    color: #FFF4D4;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #406a6c;  /*8faaa7  3c9d96  7cc0bb  449995*/
+    color: #449995; 
 }
 
 .user-input {
-    background-color: #FFF4D4;
+    background-color: #fff7db;
     border-style: solid;
-    border-width: 3px;
-    border-color: #EB5757;
-    border-radius: 30px;
+    border-width: 2px;
+    border-color: #cd8f3d;
+    border-radius: 20px;
     height: 400px;
+    opacity: 0.8;
 }
 
 #drawing {
@@ -39,11 +63,11 @@ body {
 
 #messages {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    /* margin: 0; */
+    padding: 5px;
     width: 91%;
     margin-left: 11px;
-    margin-top: 17px;
+    margin-top: 15px;
     max-height: 250px;
     overflow: auto;
     
@@ -51,10 +75,11 @@ body {
 
 #messages li {
     padding: 5px 10px;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 #messages li:nth-child(odd) {
-    background: rgba(238, 238, 238, 1) ;
+    background: rgba(255, 240, 184, 1) ;
 }
 
 form {
@@ -71,5 +96,20 @@ input {
 
 .btn {
     background-color: #FFF4D4;
-    color: #EB5757;
+    color: #364c46;
+    opacity: 1.0;
+}
+
+.send-btn {
+    position: relative;
+    bottom: 8px;
+    opacity: 1.0;
+}
+
+.clear-btn {
+    margin: 0px;
+    position: relative;
+    bottom: 50px;
+    left: 10px;
+    opacity: 1.0;
 }
