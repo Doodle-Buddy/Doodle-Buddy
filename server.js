@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
 const morgan = require("morgan");
+const game = require("./game.js");
 
 //local variables ==============================================
 const PORT = process.env.PORT || 3000;
@@ -113,6 +114,11 @@ io.sockets.on("connection", function(socket){
            users.push(userObj);
         }
         console.log(users);
+
+        // run game code method here?
+        if(users.length>1){
+            game.startGame(users);
+        }
 
    })
 
