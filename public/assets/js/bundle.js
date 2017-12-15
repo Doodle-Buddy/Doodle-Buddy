@@ -376,6 +376,8 @@ $( () => {
         $("#m").val("");
         socket.emit('chat message', message);
         return false;
+        e.preventDefault();
+        
     });
     socket.on('chat message', function (msg) {
 
