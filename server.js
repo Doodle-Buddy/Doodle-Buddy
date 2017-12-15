@@ -31,19 +31,10 @@ app.use(bodyParser.urlencoded({
 // Requiring our models for syncing
 var db = require("./models");
 
-// Syncing our sequelize models and then starting our Express app
-// =============================================================
-db.sequelize.sync({ force: false }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
-});
-
 // following the socketIO docs.. i see them put the listener in the scoket function 
 const io = socket(app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 }));
-
 
 // Routes
 // =============================================================
@@ -53,7 +44,7 @@ require("./routes/user-api-routes.js")(app);
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync({
-    force: true
+    force: false
 }).then(function () {
     io;
 });

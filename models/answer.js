@@ -1,20 +1,15 @@
 
 module.exports = function(sequelize, Sequelize) {
-  var Answer = sequelize.define("Answer", {
+  var Answer = sequelize.define("Answers", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    answers: {
       type: Sequelize.STRING,
       allowNull: false,
       len: [1, 15]
-    },
-    description: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      len: [1, 50]
     }
     },{
     timestamps: false

@@ -84,8 +84,7 @@ module.exports = function(app) {
     console.log(req.body);
     // create new answer
     db.Answer.create({
-      name: req.body.name,
-      description: req.body.description
+      name: req.body.answers
     }).then(function(dbAnswer) {
       // new answer returned in callback
       res.json(dbAnswer);
@@ -109,8 +108,7 @@ module.exports = function(app) {
   //route for updating answers
   app.put("/api/answers", function(req, res) {
     db.Answer.update({
-      name: req.body.name,
-      description: req.body.description
+      name: req.body.answers
     }, {
       where: {
         id: req.body.id
