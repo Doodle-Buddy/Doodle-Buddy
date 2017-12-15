@@ -8,6 +8,7 @@ var prevY = 0;
 var currY = 0;
 
 var dot_flag = false;
+
 // the socket is here -- 
 // var socket;
 // // the client needs to connect to the socket 
@@ -18,6 +19,8 @@ const socket = io.connect();
 
 // need a data object to send through the socket
 var dataOfLine;
+
+
 
 //when data comes into the client from the socket we need to draw on the client. 
 socket.on("mouse", function (data) {
@@ -40,6 +43,7 @@ socket.on("clear", function(data){
 
 var x = "black";
 var y = 2;
+
 
 function init() {
     canvas = document.getElementById('myCanvas');
