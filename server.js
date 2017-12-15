@@ -83,13 +83,8 @@ const routes = require("./routes/index");
 var users = [];
 
 // this is a new connection trigger for the socket
-<<<<<<< HEAD
 io.sockets.on("connection", function (socket) {
 
-=======
-io.sockets.on("connection", function(socket){
-    
->>>>>>> 1819c526fd213897220c956dde35307dc52233f6
     // connections have an id - we can use this to track clients. 
     console.log(socket.id);
     console.log("socket is connected!");
@@ -105,7 +100,6 @@ io.sockets.on("connection", function(socket){
         console.log(`message: ${msg}`);
     });
 
-<<<<<<< HEAD
     socket.on("clear", function (data) {
         socket.broadcast.emit("clear", data);
     })
@@ -115,22 +109,10 @@ io.sockets.on("connection", function(socket){
         var userObj = {};
         for (i = 0; i < users.length; i++) {
             if (users[i].username === username) {
-=======
-    socket.on("clear", function(data){
-        socket.broadcast.emit("clear", data);
-    })
-
-    socket.on("username", function(username){
-        var exists = false;
-        var userObj = {};
-        for(i=0; i<users.length; i++){
-            if(users[i].username === username){
->>>>>>> 1819c526fd213897220c956dde35307dc52233f6
                 users[i].socketID.push(socket.id);
                 exists = true;
             }
         }
-<<<<<<< HEAD
 
         if (!exists) {
             userObj = {
@@ -142,19 +124,6 @@ io.sockets.on("connection", function(socket){
         console.log(users);
 
     })
-=======
-        
-        if(!exists){
-           userObj = {
-               username: username,
-               socketID: [socket.id]
-           };
-           users.push(userObj);
-        }
-        console.log(users);
-
-   })
->>>>>>> 1819c526fd213897220c956dde35307dc52233f6
 
     socket.on("disconnect", () => {
         console.log("user disconnected");
