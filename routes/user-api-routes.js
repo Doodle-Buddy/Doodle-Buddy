@@ -58,8 +58,7 @@ module.exports = function(app) {
   //route for updating users
   app.put("/api/users", function(req, res) {
     db.User.update({
-      name: req.body.name,
-      password: req.body.password
+      name: req.body.name
     }, {
       where: {
         id: req.body.id
