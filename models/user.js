@@ -1,6 +1,6 @@
 
 module.exports = function(sequelize, Sequelize) {
-  var Answer = sequelize.define("Answer", {
+  var User = sequelize.define("User", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -8,18 +8,17 @@ module.exports = function(sequelize, Sequelize) {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       len: [1, 15]
     },
-    description: {
+    password: {
       type: Sequelize.STRING,
       allowNull: true,
-      len: [1, 50]
+      len: [1, 15]
     }
-    },{
+  },{
     timestamps: false
-  
   });
 
-  return Answer;
+  return User;
 };
