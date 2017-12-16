@@ -1,4 +1,3 @@
-
 module.exports = function(sequelize, Sequelize) {
   var Answer = sequelize.define("Answer", {
     id: {
@@ -6,15 +5,10 @@ module.exports = function(sequelize, Sequelize) {
       autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    answers: {
       type: Sequelize.STRING,
       allowNull: false,
       len: [1, 15]
-    },
-    description: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      len: [1, 50]
     }
     },{
     timestamps: false

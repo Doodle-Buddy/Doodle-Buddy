@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const socket = require("socket.io");
 const morgan = require("morgan");
+const game = require("./game.js");
 
 //local variables ==============================================
 const PORT = process.env.PORT || 3000;
@@ -28,37 +29,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// Requiring our models for syncing
-var db = require("./models");
-
-// Syncing our sequelize models and then starting our Express app
-// =============================================================
-db.sequelize.sync({
-    force: false
-}).then(function () {
-    app.listen(PORT, function () {
-        console.log("App listening on PORT " + PORT);
-    });
-});
-// following the socketIO docs.. i see them put the listener in the scoket function 
-const io = socket(app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-}));
-
-
-// Routes
-// =============================================================
-require("./routes/answer-api-routes.js")(app);
-require("./routes/user-api-routes.js")(app);
-
-// Syncing our sequelize models and then starting our Express app
-// =============================================================
-db.sequelize.sync({
-    force: true
-}).then(function () {
-    io;
-});
-
 // server setup for public files, handlebars and routes ==============================================
 
 const exphbs = require("express-handlebars");
@@ -69,6 +39,28 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 const routes = require("./routes/index");
+
+// Requiring our models for syncing
+var db = require("./models");
+
+// following the socketIO docs.. i see them put the listener in the scoket function 
+const io = socket(app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+}));
+
+// Routes
+// =============================================================
+require("./routes/answer-api-routes.js")(app);
+require("./routes/user-api-routes.js")(app);
+app.use("/", routes);
+
+// Syncing our sequelize models and then starting our Express app
+// =============================================================
+db.sequelize.sync({
+    force: false
+}).then(function () {
+    io;
+});
 
 // listen to to a port ==============================================
 // - Danny: I commented this out but idk if we need this for later -- the io varibale has the listener though. 
@@ -82,12 +74,57 @@ const routes = require("./routes/index");
 // i think i need to put the users object outside the connect because it will get emptied everytime a socket is opened. 
 var users = [];
 
-// this is a new connection trigger for the socket
-io.sockets.on("connection", function (socket) {
+// store variable for game 
+var gameWord;
+var drawer;
+var drawerID;
+var round = 0;
+var userGuess;
 
-    // connections have an id - we can use this to track clients. 
-    console.log(socket.id);
-    console.log("socket is connected!");
+// this is a new connection trigger for the socket
+io.sockets.on("connection", function(socket){
+    // putting game function here. cause it needs the socket param. 
+    function aRound(){
+        console.log("the round method is called. ");
+        //we get a gameword once 2 players enter and we can start the game. 
+        game.getGameWord().then(function(fromResolve){
+            //also we need to decide who is the drawer first. 
+            if(round <= users.length){
+                drawer = users[round].username
+                drawerID = users[round].socketID[0];
+                gameWord = fromResolve;
+                
+                console.log("drawer " + drawer)
+                console.log("drawerID " + drawerID);
+
+                //lets tell the drawer he is the drawer and what the word is. 
+                socket.broadcast.to(drawerID).emit('chat message', 'You are the drawer. The word is '+ gameWord);
+    
+                //now that the drawer is set and we gave him the word.. we need to listen if anyone has said taht word.    
+                socket.on("chat message", msg => {
+                    for(i=0; i<msg.length; i++){
+                        if(msg.charAt(i) === ":"){
+                            userGuess = msg.substring(i+1, msg.length).trim();
+    
+                            // if the guess that came in was the gameword they won! 
+                            if(userGuess === gameWord){
+                                io.emit("chat message", "Correct! The word was " + gameWord);
+    
+                                // go to the next round. 
+                                round++
+                                aRound();
+    
+                            }
+                        }
+                    }
+                });
+    
+            }
+            else{
+                io.emit("chat message", "Game is over.");
+            }
+        });
+    }
 
     // when we recieve data about the mouse from the client do a function. 
     socket.on("mouse", function (data) {
@@ -97,7 +134,7 @@ io.sockets.on("connection", function (socket) {
 
     socket.on("chat message", msg => {
         io.emit("chat message", msg);
-        console.log(`message: ${msg}`);
+        //console.log(`message: ${msg}`);
     });
 
     socket.on("clear", function (data) {
@@ -123,7 +160,13 @@ io.sockets.on("connection", function (socket) {
         }
         console.log(users);
 
-    })
+        // check if we have 2 users to start the game. Added exists here cause username gets hit 2 times with same user which causes this to run twice... sloopy code but works so far. 
+        if(users.length === 2 && exists){
+            // start the fisrt round. 
+            console.log("first round has started.");
+            aRound();
+        }
+   })
 
     socket.on("disconnect", () => {
         console.log("user disconnected");
@@ -131,4 +174,3 @@ io.sockets.on("connection", function (socket) {
 
 });
 
-app.use("/", routes);

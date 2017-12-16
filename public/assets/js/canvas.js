@@ -65,6 +65,7 @@ function init() {
     }, false);
 }
 
+// we can put a flag here and mark it true or false if the user is not the drawer or not 
 function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);

@@ -1,5 +1,6 @@
 $(function () {
-    var socket = io();
+    // socket io was smart enough to use the same connection for canvas and chat. lololol.
+    //var socket = io();
 
     var username;
     // listening for event - username being created. 

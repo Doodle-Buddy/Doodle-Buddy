@@ -16,11 +16,10 @@ var Word = function(actualWord){
 
 	 		return true;
 
-		};
+	};
 };
 	console.log(`actualWord: ${this.actualWord}`);
 
-
 //==============================//
 
-module.exports = Word;
+//module.exports = Word;

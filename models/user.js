@@ -10,11 +10,6 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING,
       allowNull: true,
       len: [1, 15]
-    },
-    password: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      len: [1, 15]
     }
   },{
     timestamps: false

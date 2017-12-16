@@ -1,4 +1,4 @@
-var Word = require("./words.js");
+//var Word = require("./words.js");
 
 //==============================//
 
@@ -17,11 +17,15 @@ var Round = function(){
 };
 
 Round.prototype.wordList = function(){
-    // Send the GET request.
-    $.get("/api/answers", function(data){
-      console.log("answers", data);
-      	return data;
-    });
+    // Send the GET request. //its client side so this needs to be an ajax call. 
+    $.ajax({
+		url: "/api/answers",
+        type: "GET",
+    }).then(
+        function(res){
+            console.log(res);
+        }
+    );
 };
 
 Round.prototype.randomWord = function(){
@@ -36,12 +40,4 @@ Round.prototype.randomWord = function(){
 
 //==============================//
 
-module.exports = Round;
-
-
-
-
-
-
-
-
+//module.exports = Round;
