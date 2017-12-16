@@ -67,6 +67,7 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 const answers = __webpack_require__(1);
 const canvas = __webpack_require__(2);
 const game = __webpack_require__(3);
@@ -398,6 +399,7 @@ $( () => {
 
 /***/ }),
 /* 5 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//  Chance.js 1.0.12
@@ -7748,10 +7750,12 @@ $( () => {
     }
 })();
 
+
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6).Buffer))
 
 /***/ }),
 /* 6 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7765,9 +7769,11 @@ $( () => {
 
 
 
+
 var base64 = __webpack_require__(8)
 var ieee754 = __webpack_require__(9)
 var isArray = __webpack_require__(10)
+
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -9545,10 +9551,12 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
+
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 7 */
+
 /***/ (function(module, exports) {
 
 var g;
@@ -9575,7 +9583,9 @@ module.exports = g;
 
 
 /***/ }),
+
 /* 8 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9696,7 +9706,9 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
+
 /* 9 */
+
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -9786,7 +9798,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
+
 /* 10 */
+
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -9797,6 +9811,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
+
 /* 11 */
 /***/ (function(module, exports) {
 
@@ -9962,6 +9977,7 @@ module.exports = Array.isArray || function (arr) {
 // //==============================//
 
 // //module.exports = Word;
+
 
 
 /***/ })

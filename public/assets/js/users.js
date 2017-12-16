@@ -3,22 +3,26 @@ const Chance = require("chance")
 const chance = new Chance();
 
 $( () => {
-    let usernameInput = $("#username");
-    let inputMessage = $("#m");
-    let connected = false, username = null;
-    const socket = io();
-
+    var username;
+    $('#username-form').submit(false);
+    
     // initialize the moddal 
-    $('.modal').modal({
-        dismissible: false // Modal can be dismissed by clicking outside of the modal
-    });
+    $('.modal').modal(
+        {
+            dismissible: false // Modal can be dismissed by clicking outside of the modal
+        }
+    );
     // open the model 
     $('#modal1').modal('open');
     // on click we need to grab what the user put and if its  blank we give him a Chance.first();
-    $("#submit-btn").on("click", function () {
+    
+    $("#submit-btn").on("click", function(e){
+        e.preventDefault();
         // checck if the form was blank. 
-        if (usernameInput.val().trim() === "") {
+    
+        if($("#username").val().trim() === ""){
             username = chance.first();
+
             setUsername();
         } else {
             username = $("#username").val().trim();
@@ -53,6 +57,7 @@ $( () => {
 
         $('#messages').append($('<li>').text(msg));
         
+
     });
 
 });
