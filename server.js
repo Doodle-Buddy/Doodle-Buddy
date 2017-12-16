@@ -86,7 +86,7 @@ io.sockets.on("connection", function(socket){
             //also we need to decide who is the drawer first. 
             if(round <= users.length){
                 drawer = users[round].username
-                drawerID = users[round].socketID[0];
+                drawerID = users[round].socketID;
                 gameWord = fromResolve;
                 
                 console.log("drawer " + drawer)
@@ -173,21 +173,14 @@ io.sockets.on("connection", function(socket){
         var exists = false;
         var userObj = {};
         console.log("users got hit on socket. ");
-        for (i = 0; i < users.length; i++) {
-            if (users[i].username === username) {
-                users[i].socketID.push(socket.id);
-                exists = true;
-            }
-        }
-
-        if (!exists) {
-            userObj = {
-                username: username,
-                socketID: [socket.id]
-            };
-            users.push(userObj);
-            console.log(users.length);
-        }
+ 
+        userObj = {
+            username: username,
+            socketID: socket.id
+        };
+        users.push(userObj);
+        console.log(users.length);
+        
         console.log(users);
 
    })
