@@ -1,43 +1,43 @@
-//var Word = require("./words.js");
+// //var Word = require("./words.js");
 
-//==============================//
+// //==============================//
 
-//at the top of the game, a random word is pulled and stored as chosenWord
-//chosenWord is passed through Word constructor and stored as object within NewGame
-var Round = function(){
-	//all words that could be chosen
-	this.wordList();
-	//randomWord is grabbed from all words
-	this.randomWord();
-	//randomWord is passed into Word constructor
-	//chosenWord is stored as Word object
-	this.chosenWord = new Word(this.randomWord);
-	//guesses available in NewGame starts as 9
+// //at the top of the game, a random word is pulled and stored as chosenWord
+// //chosenWord is passed through Word constructor and stored as object within NewGame
+// var Round = function(){
+// 	//all words that could be chosen
+// 	this.wordList();
+// 	//randomWord is grabbed from all words
+// 	this.randomWord();
+// 	//randomWord is passed into Word constructor
+// 	//chosenWord is stored as Word object
+// 	this.chosenWord = new Word(this.randomWord);
+// 	//guesses available in NewGame starts as 9
 
-};
+// };
 
-Round.prototype.wordList = function(){
-    // Send the GET request. //its client side so this needs to be an ajax call. 
-    $.ajax({
-		url: "/api/answers",
-        type: "GET",
-    }).then(
-        function(res){
-            console.log(res);
-        }
-    );
-};
+// Round.prototype.wordList = function(){
+//     // Send the GET request. //its client side so this needs to be an ajax call. 
+//     $.ajax({
+// 		url: "/api/answers",
+//         type: "GET",
+//     }).then(
+//         function(res){
+//             console.log(res);
+//         }
+//     );
+// };
 
-Round.prototype.randomWord = function(){
-	var random = (this.wordList[Math.floor(Math.random() * this.wordList.length)]);
-	var randomName = random.name;
+// Round.prototype.randomWord = function(){
+// 	var random = (this.wordList[Math.floor(Math.random() * this.wordList.length)]);
+// 	var randomName = random.name;
 
-	randomName.toLowerCase();
+// 	randomName.toLowerCase();
 
-	return randomName;
-}
+// 	return randomName;
+// }
 
 
-//==============================//
+// //==============================//
 
-//module.exports = Round;
+// //module.exports = Round;

@@ -11,7 +11,7 @@ $(function () {
     });
 
     $('form').submit(function () {
-
+        console.log(username + " this si the user name!")
         socket.emit('chat message', username + ": " + $('#m').val());
         $('#m').val('');
         return false;

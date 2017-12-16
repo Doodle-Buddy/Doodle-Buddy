@@ -19,13 +19,14 @@ $( () => {
         // checck if the form was blank. 
         if (usernameInput.val().trim() === "") {
             username = chance.first();
+            setUsername();
         } else {
             username = $("#username").val().trim();
             setUsername();
         }
-            console.log(username);
+            console.log(username + "changeee" );
         
-    })
+    });
     //Prevents input from having injected markup
     const cleanInput = input => {
         return $('<div/>').text(input).html();
@@ -44,7 +45,7 @@ $( () => {
         let message = inputMessage.val();
         message = cleanInput(message);
         $("#m").val("");
-        socket.emit('chat message', message);
+        socket.emit('chat message', username + ": " + message);
         e.preventDefault();
         
     });
