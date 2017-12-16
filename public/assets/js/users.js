@@ -22,25 +22,42 @@ $( () => {
     
         if($("#username").val().trim() === ""){
             username = chance.first();
-        }
-    
-        else{
+
+            setUsername();
+        } else {
             username = $("#username").val().trim();
+            setUsername();
         }
-        // how can i get this username and use it from another js file? -- make a constructor and then call that function to run this code about the modal else where??? 
-        console.log(username);
-    
-        $.ajax("/api/users/", {
-            type: "POST",
-            dataType: "json",
-            data: {username: username}
-        }).then(
-            function(){
-                var event = new CustomEvent('userCreated', {detail: username});
-                window.dispatchEvent(event);
-            }
-        );
-    
+            console.log(username + "changeee" );
+        
+    });
+    //Prevents input from having injected markup
+    const cleanInput = input => {
+        return $('<div/>').text(input).html();
+    };
+
+    const setUsername = () => {
+        username = cleanInput(username);
+
+        if (username) {
+            socket.emit('add user', username);
+        }
+    };
+
+    //Grabs chat message and emits to socket
+    $('form').submit(function (e) {
+        let message = inputMessage.val();
+        message = cleanInput(message);
+        $("#m").val("");
+        socket.emit('chat message', username + ": " + message);
+        e.preventDefault();
+        
+    });
+    socket.on('chat message', function (msg) {
+
+        $('#messages').append($('<li>').text(msg));
+        
+
     });
 
 });

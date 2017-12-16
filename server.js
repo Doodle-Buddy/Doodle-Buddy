@@ -62,14 +62,6 @@ db.sequelize.sync({
     io;
 });
 
-// listen to to a port ==============================================
-// - Danny: I commented this out but idk if we need this for later -- the io varibale has the listener though. 
-// app.listen(PORT, () => { 
-//     console.log(`App listening on port ${PORT}`);
-// });
-
-
-
 // Danny: I wonder if we should move all this socket code to a seperate file.. maybe after we get it workiong we should or have it as a nice to have. 
 // i think i need to put the users object outside the connect because it will get emptied everytime a socket is opened. 
 var users = [];
@@ -83,6 +75,7 @@ var userGuess;
 
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
+    console.log("connection made!")
     // putting game function here. cause it needs the socket param. 
     function aRound(){
         console.log("the round method is called. ");
@@ -134,16 +127,17 @@ io.sockets.on("connection", function(socket){
 
     socket.on("chat message", msg => {
         io.emit("chat message", msg);
-        //console.log(`message: ${msg}`);
+        console.log(`message: ${msg}`);
     });
 
     socket.on("clear", function (data) {
         socket.broadcast.emit("clear", data);
     })
 
-    socket.on("username", function (username) {
+    socket.on("add user", function (username) {
         var exists = false;
         var userObj = {};
+        console.log("users got hit on socket. ");
         for (i = 0; i < users.length; i++) {
             if (users[i].username === username) {
                 users[i].socketID.push(socket.id);
@@ -157,19 +151,20 @@ io.sockets.on("connection", function(socket){
                 socketID: [socket.id]
             };
             users.push(userObj);
+            console.log(users.length);
         }
         console.log(users);
 
         // check if we have 2 users to start the game. Added exists here cause username gets hit 2 times with same user which causes this to run twice... sloopy code but works so far. 
-        if(users.length === 2 && exists){
+        if(users.length === 2){
             // start the fisrt round. 
             console.log("first round has started.");
             aRound();
         }
    })
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
+    socket.on("disconnect", (reason) => {
+        console.log("user disconnected - " + reason);
     });
 
 });
