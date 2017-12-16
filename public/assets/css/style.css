@@ -16,7 +16,7 @@ body {
 
 #background-image{
     /* wallpaper of pencils with lines */
-    background-image: url("pencils.jpg");
+    background-image: url("../img/pencils.jpg");
 
     /* Full height */
     height: 100%; 

@@ -60,39 +60,21 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-//==============================//
+const answers = __webpack_require__(1);
+const canvas = __webpack_require__(2);
+const users = __webpack_require__(3);
+const logic = __webpack_require__(10);
+const rounds = __webpack_require__(11);
+const words = __webpack_require__(12);
+const chat = __webpack_require__(13);
 
-//word selected during the new game passes into constructor
-//individual word is stored as object
-//Word
-var Word = function(actualWord){
-	//value of the word is stored as actualWord
-	this.actualWord = actualWord;
-	//check user against against every character in the chosen word
-	this.CheckWords = function(userGuess){
-		 	for(var i = 0; i < this.actualWord.length; i++){
-		 		if(this.actualWord.charAt(i) != userGuess[i]){
-		 			return false;
-		 		}
-	 		}
-
-	 		return true;
-
-		};
-};
-	console.log(`actualWord: ${this.actualWord}`);
-
-
-//==============================//
-
-module.exports = Word;
 
 
 /***/ }),
@@ -185,74 +167,6 @@ module.exports = Answers;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Word = __webpack_require__(0);
-
-//==============================//
-
-//at the top of the game, a random word is pulled and stored as chosenWord
-//chosenWord is passed through Word constructor and stored as object within NewGame
-var Round = function(){
-	//all words that could be chosen
-	this.wordList();
-	//randomWord is grabbed from all words
-	this.randomWord();
-	//randomWord is passed into Word constructor
-	//chosenWord is stored as Word object
-	this.chosenWord = new Word(this.randomWord);
-	//guesses available in NewGame starts as 9
-
-};
-
-Round.prototype.wordList = function(){
-    // Send the GET request.
-    $.get("/api/answers", function(data){
-      console.log("answers", data);
-      	return data;
-    });
-};
-
-Round.prototype.randomWord = function(){
-	var random = (this.wordList[Math.floor(Math.random() * this.wordList.length)]);
-	var randomName = random.name;
-
-	randomName.toLowerCase();
-
-	return randomName;
-}
-
-
-//==============================//
-
-module.exports = Round;
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const answers = __webpack_require__(1);
-const canvas = __webpack_require__(4);
-const game = __webpack_require__(5);
-const users = __webpack_require__(6);
-const logic = __webpack_require__(13);
-const rounds = __webpack_require__(2);
-const words = __webpack_require__(0);
-
-
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 // set variables for the canvas. 
@@ -265,6 +179,7 @@ var prevY = 0;
 var currY = 0;
 
 var dot_flag = false;
+
 // the socket is here -- 
 // var socket;
 // // the client needs to connect to the socket 
@@ -275,6 +190,8 @@ const socket = io.connect();
 
 // need a data object to send through the socket
 var dataOfLine;
+
+
 
 //when data comes into the client from the socket we need to draw on the client. 
 socket.on("mouse", function (data) {
@@ -298,6 +215,7 @@ socket.on("clear", function(data){
 var x = "black";
 var y = 2;
 
+
 function init() {
     canvas = document.getElementById('myCanvas');
     ctx = canvas.getContext("2d");
@@ -318,6 +236,7 @@ function init() {
     }, false);
 }
 
+// we can put a flag here and mark it true or false if the user is not the drawer or not 
 function draw() {
     ctx.beginPath();
     ctx.moveTo(prevX, prevY);
@@ -385,98 +304,58 @@ document.getElementById("clear").onclick = function () {
 init();
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Answer = __webpack_require__(1);
-
-//==============================//
-
-//at the top of the game, a random answer is pulled and stored as chosenAnswer
-//chosenAnswer is passed through Answer constructor and stored as object within New instnace of Game
-var Game = function () {
-	//all answers that could be chosen
-	//randomAnswer is grabbed from all answers in GET call
-	this.randomAnswer = function () {
-		$.get("/api/answers", function (data) {
-			var chosen = data[Math.floor(Math.random() * data.length)];
-		});
-		return chosen
-	};
-	//chosen answer is returned from randomAnswer function
-	this.chosenAnswer = new Answer(this.randomAnswer);
-
-};
-
-//==============================//
-
-
-module.exports = Game;
-
-/***/ }),
-/* 6 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // chancejs stuff 
-const Chance = __webpack_require__(7)
+const Chance = __webpack_require__(4)
 const chance = new Chance();
 
 $( () => {
-    let usernameInput = $("#username");
-    let inputMessage = $("#m");
-    let connected = false, username = null;
-    const socket = io();
-
+    var username;
+    $('#username-form').submit(false);
+    
     // initialize the moddal 
-    $('.modal').modal({
-        dismissible: false // Modal can be dismissed by clicking outside of the modal
-    });
+    $('.modal').modal(
+        {
+            dismissible: false // Modal can be dismissed by clicking outside of the modal
+        }
+    );
     // open the model 
     $('#modal1').modal('open');
     // on click we need to grab what the user put and if its  blank we give him a Chance.first();
-    $("#submit-btn").on("click", function () {
-        // checck if the form was blank. 
-        if (usernameInput.val().trim() === "") {
-            username = chance.first();
-        } else {
-            username = $("#username").val().trim();
-            setUsername();
-        }
-            console.log(username);
-        
-    })
-    //Prevents input from having injected markup
-    const cleanInput = input => {
-        return $('<div/>').text(input).html();
-    };
-
-    const setUsername = () => {
-        username = cleanInput(username);
-
-        if (username) {
-            socket.emit('add user', username);
-        }
-    };
-
-    //Grabs chat message and emits to socket
-    $('form').submit(function (e) {
-        let message = inputMessage.val();
-        message = cleanInput(message);
-        $("#m").val("");
-        socket.emit('chat message', message);
+    
+    $("#submit-btn").on("click", function(e){
         e.preventDefault();
-        
-    });
-    socket.on('chat message', function (msg) {
-
-        $('#messages').append($('<li>').text(msg));
-        
+        // checck if the form was blank. 
+    
+        if($("#username").val().trim() === ""){
+            username = chance.first();
+        }
+    
+        else{
+            username = $("#username").val().trim();
+        }
+        // how can i get this username and use it from another js file? -- make a constructor and then call that function to run this code about the modal else where??? 
+        console.log(username);
+    
+        $.ajax("/api/users/", {
+            type: "POST",
+            dataType: "json",
+            data: {username: username}
+        }).then(
+            function(){
+                var event = new CustomEvent('userCreated', {detail: username});
+                window.dispatchEvent(event);
+            }
+        );
+    
     });
 
 });
 
 /***/ }),
-/* 7 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//  Chance.js 1.0.12
@@ -7827,10 +7706,10 @@ $( () => {
     }
 })();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
 
 /***/ }),
-/* 8 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7844,9 +7723,9 @@ $( () => {
 
 
 
-var base64 = __webpack_require__(10)
-var ieee754 = __webpack_require__(11)
-var isArray = __webpack_require__(12)
+var base64 = __webpack_require__(7)
+var ieee754 = __webpack_require__(8)
+var isArray = __webpack_require__(9)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -9624,10 +9503,10 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 9 */
+/* 6 */
 /***/ (function(module, exports) {
 
 var g;
@@ -9654,7 +9533,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 10 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9775,7 +9654,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -9865,7 +9744,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 12 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -9876,90 +9755,200 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 10 */
+/***/ (function(module, exports) {
 
-// logic connected to the html page
+// // logic connected to the html page
 
-//==============================//
+// //==============================//
+// // not sure if we can require on client side. the constructor is good enough. 
+// // var Word = require("./words.js");
+// // var Round = require("./rounds.js");
 
-var Word = __webpack_require__(0);
-var Round = __webpack_require__(2);
+// //==============================//
 
-//==============================//
+// //FUNCTIONS
+// //------------------------------
 
-//FUNCTIONS
-//------------------------------
+// // not sure if we are doing a timer just yet. 
 
-//Timer
-function startTimer() {
-	intervalId = setInterval(decrement, 1000);
-};
+// // //Timer
+// // function startTimer() {
+// // 	intervalId = setInterval(decrement, 1000);
+// // };
 
-//timer decreases in value to count down game time
-function decrement() {
-    //print countdown in #start-timer div
-    $("#start-timer").html("<h2>" + countdown + "</h2>");
+// // //timer decreases in value to count down game time
+// // function decrement() {
+// //     //print countdown in #start-timer div
+// //     $("#start-timer").html("<h2>" + countdown + "</h2>");
 
-    //countdown decreases by 1 and stores its value
-    countdown--;
-};
+// //     //countdown decreases by 1 and stores its value
+// //     countdown--;
+// // };
 
-//newGame to be called at the end of each round
-function newGame() {
-	//new Round is generated and stored
-  newRound = new Round();
-  //intervalId is cleared
-  clearInterval(intervalId);
-  //reset countdown
-  countdown = 30;
-  //start timer anew
-  startTimer();
-};
+// //newGame to be called at the end of each round
+// function newGame() {
+// 	//new Round is generated and stored
+//   newRound = new Round();
 
-//Global Variables
-//---------------------------------------------
+//   // commenting out timer. 
+//   //intervalId is cleared
+// //   clearInterval(intervalId);
+// //   //reset countdown
+// //   countdown = 30;
+// //   //start timer anew
+// //   startTimer();
+// };
 
-//countdown starts at 30
-var countdown = 30;
-//stores interval value
-var intervalId;
-var newRound;
+// //Global Variables
+// //---------------------------------------------
 
-//Gameplay
-//---------------------------------------------
+// //countdown starts at 30
+// var countdown = 30;
+// //stores interval value
+// var intervalId;
+// var newRound;
 
-//when two players are on the page: 
-//the game starts
-newGame();
+// //Gameplay
+// //---------------------------------------------
 
-//if countdown is 0, game must restart
-if(countdown === 0){
-		console.log("You lose!");
-		newGame();
-	}
+// //when two players are on the page: 
+// //the game starts
+// newGame();
 
-//user inputs answer through chat
-//chat response is grabbed
+// //if countdown is 0, game must restart
+// if(countdown === 0){
+// 		console.log("You lose!");
+// 		newGame();
+// 	}
 
-$(".btn").click(function(event){
+// //user inputs answer through chat
+// //chat response is grabbed
+
+// $(".btn").click(function(event){
 	
-	event.preventDefault();
+// 	event.preventDefault();
 
-	var rawGuess = $("#m").val().trim();
-	var userGuess = rawGuess.toLowerCase();
+// 	var rawGuess = $("#m").val().trim();
+// 	var userGuess = rawGuess.toLowerCase();
 
-	if (newGame.chosenWord.CheckWords(userGuess) === true){
+// 	if (newGame.chosenWord.CheckWords(userGuess) === true){
 		
-		console.log("Winner!");
-		newGame();
+// 		console.log("Winner!");
+// 		newGame();
+// 	}
 
-	}
+// });
 
-});
+// //==============================//
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+//var Word = require("./words.js");
 
 //==============================//
 
+//at the top of the game, a random word is pulled and stored as chosenWord
+//chosenWord is passed through Word constructor and stored as object within NewGame
+var Round = function(){
+	//all words that could be chosen
+	this.wordList();
+	//randomWord is grabbed from all words
+	this.randomWord();
+	//randomWord is passed into Word constructor
+	//chosenWord is stored as Word object
+	this.chosenWord = new Word(this.randomWord);
+	//guesses available in NewGame starts as 9
+
+};
+
+Round.prototype.wordList = function(){
+    // Send the GET request. //its client side so this needs to be an ajax call. 
+    $.ajax({
+		url: "/api/answers",
+        type: "GET",
+    }).then(
+        function(res){
+            console.log(res);
+        }
+    );
+};
+
+Round.prototype.randomWord = function(){
+	var random = (this.wordList[Math.floor(Math.random() * this.wordList.length)]);
+	var randomName = random.name;
+
+	randomName.toLowerCase();
+
+	return randomName;
+}
+
+
+//==============================//
+
+//module.exports = Round;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+//==============================//
+
+//word selected during the new game passes into constructor
+//individual word is stored as object
+//Word
+var Word = function(actualWord){
+	//value of the word is stored as actualWord
+	this.actualWord = actualWord;
+	//check user against against every character in the chosen word
+	this.CheckWords = function(userGuess){
+		 	for(var i = 0; i < this.actualWord.length; i++){
+		 		if(this.actualWord.charAt(i) != userGuess[i]){
+		 			return false;
+		 		}
+	 		}
+
+	 		return true;
+
+	};
+};
+	console.log(`actualWord: ${this.actualWord}`);
+
+//==============================//
+
+//module.exports = Word;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+
+$(function () {
+    var socket = io();
+
+    var username;
+    // listening for event - username being created. 
+    window.addEventListener("userCreated", function (e) {
+        console.log(e.detail);
+        username = e.detail;
+        socket.emit("username", username);
+    });
+
+    $('form').submit(function () {
+        console.log(username + "hey");
+        socket.emit('chat message', username + ": " + $('#m').val());
+        $('#m').val('');
+        // return false;
+    });
+    socket.on('chat message', function (msg) {
+
+        $('#messages').append($('<li>').text(msg));
+    });
+});
 
 /***/ })
 /******/ ]);

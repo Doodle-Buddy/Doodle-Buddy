@@ -1,6 +1,6 @@
+
 $(function () {
-    // socket io was smart enough to use the same connection for canvas and chat. lololol.
-    //var socket = io();
+    var socket = io();
 
     var username;
     // listening for event - username being created. 
@@ -11,13 +11,13 @@ $(function () {
     });
 
     $('form').submit(function () {
-
+        console.log(username + "hey");
         socket.emit('chat message', username + ": " + $('#m').val());
         $('#m').val('');
-        return false;
+        // return false;
     });
     socket.on('chat message', function (msg) {
 
-        $('#messages').prepend($('<li>').text(msg));
+        $('#messages').append($('<li>').text(msg));
     });
 });
