@@ -57,7 +57,7 @@ app.use("/", routes);
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync({
-    force: false
+    force: true
 }).then(function () {
     io;
 });
@@ -157,6 +157,7 @@ io.sockets.on("connection", function(socket){
                     if(startGameMsg === "end game"){
                         io.emit("chat message", "Game ended!");
                         isGameReady = true;
+                        round = 0;
                     }
                 }
             }
