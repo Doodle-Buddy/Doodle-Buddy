@@ -93,7 +93,7 @@ io.sockets.on("connection", function(socket){
                 console.log("drawerID " + drawerID);
 
                 //lets tell the drawer he is the drawer and what the word is. 
-                socket.broadcast.to(drawerID).emit('chat message', 'You are the drawer. The word is '+ gameWord);
+                io.sockets.connected[drawerID].emit('chat message', 'You are the drawer. The word is '+ gameWord);
     
                 //now that the drawer is set and we gave him the word.. we need to listen if anyone has said taht word.    
                 socket.on("chat message", msg => {
