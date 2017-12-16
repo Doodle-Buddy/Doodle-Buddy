@@ -1,49 +1,65 @@
 html,
 body {
-    background-color: #FFEEBA;
+    /* Full height */
+    height: 100%;
+    width: 100%;
+    /* pairing font */
+    font-family: 'Lato', sans-serif;   
+}
+
+#m {
+     /* writes in pairing font */
+     font-family: 'Lato', sans-serif;   
+     margin-bottom: 0px;
+     padding-bottom: 0px;
+}
+
+#background-image{
+    /* wallpaper of pencils with lines */
+    background-image: url("pencils.jpg");
+
+    /* Full height */
+    height: 100%; 
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #header {
+    /* main logo font */
     font-family: 'Gloria Hallelujah', cursive;
     font-size: 80px;
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: #EB5757;
-    color: #FFF4D4;
+    /* stroke color */
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #406a6c;
+    /* inner color */
+    color: #449995; 
 }
 
 .user-input {
-    background-color: #FFF4D4;
+    background-color: #fff7db;
     border-style: solid;
-    border-width: 3px;
-    border-color: #EB5757;
-    border-radius: 30px;
+    border-width: 2px;
+    border-color: #cd8f3d;
+    border-radius: 20px;
+    /* div height  */
     height: 400px;
-}
-
-#drawing {
-    /* min-width: 440px; */
-}
-
-#myCanvas {
-    /* display: block; */
-    /* height: 400px; */
-    /* width: 100%; */
-    /* height: 100%; */
-    /* max-width: 100%; */
-    /* box-sizing: border-box; */
+    opacity: 0.8;
 }
 
 #chat {
-    position: relative
+    position: relative;
 }
 
 #messages {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    padding: 5px;
     width: 91%;
     margin-left: 11px;
-    margin-top: 17px;
+    margin-top: 15px;
     max-height: 250px;
     overflow: auto;
     
@@ -51,10 +67,11 @@ body {
 
 #messages li {
     padding: 5px 10px;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 #messages li:nth-child(odd) {
-    background: rgba(238, 238, 238, 1) ;
+    background: rgba(255, 240, 184, 1) ;
 }
 
 form {
@@ -71,5 +88,34 @@ input {
 
 .btn {
     background-color: #FFF4D4;
-    color: #EB5757;
+    color: #364c46;
+    opacity: 1.0;
 }
+
+.send-btn {
+    position: relative;
+    bottom: 8px;
+    opacity: 1.0;
+    margin-right:10px;
+}
+
+#start-timer {
+    font: 35px bolder;
+    font-family: 'Gloria Hallelujah', cursive;
+    padding-left: 25px;
+}
+
+.clear-btn {
+    margin: 0px;
+    position: relative;
+    bottom: 55px;
+    left: 20px;
+    opacity: 1.0;
+}
+
+
+.input-field{
+    margin-top: 0px;
+    padding-left: 20px;
+}
+

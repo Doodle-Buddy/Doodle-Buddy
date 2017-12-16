@@ -18,7 +18,7 @@ function startTimer() {
 //timer decreases in value to count down game time
 function decrement() {
     //print countdown in #start-timer div
-    $("#start-timer").html("<h2>" + countdown + "</h2>");
+    $("#start-timer").text(countdown);
 
     //countdown decreases by 1 and stores its value
     countdown--;
