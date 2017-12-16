@@ -72,10 +72,12 @@ var drawer;
 var drawerID;
 var round = 0;
 var userGuess;
+var isGameReady = true;
 
 // this is a new connection trigger for the socket
 io.sockets.on("connection", function(socket){
     console.log("connection made!")
+
     // putting game function here. cause it needs the socket param. 
     function aRound(){
         console.log("the round method is called. ");
@@ -84,14 +86,14 @@ io.sockets.on("connection", function(socket){
             //also we need to decide who is the drawer first. 
             if(round <= users.length){
                 drawer = users[round].username
-                drawerID = users[round].socketID[0];
+                drawerID = users[round].socketID;
                 gameWord = fromResolve;
                 
                 console.log("drawer " + drawer)
                 console.log("drawerID " + drawerID);
 
                 //lets tell the drawer he is the drawer and what the word is. 
-                socket.broadcast.to(drawerID).emit('chat message', 'You are the drawer. The word is '+ gameWord);
+                io.sockets.connected[drawerID].emit('chat message', 'You are the drawer. The word is '+ gameWord);
     
                 //now that the drawer is set and we gave him the word.. we need to listen if anyone has said taht word.    
                 socket.on("chat message", msg => {
@@ -115,6 +117,7 @@ io.sockets.on("connection", function(socket){
             }
             else{
                 io.emit("chat message", "Game is over.");
+                isGameStarted = false;
             }
         });
     }
@@ -128,6 +131,38 @@ io.sockets.on("connection", function(socket){
     socket.on("chat message", msg => {
         io.emit("chat message", msg);
         console.log(`message: ${msg}`);
+
+        if(isGameReady){
+            for(i=0; i<msg.length; i++){
+                if(msg.charAt(i) === ":"){
+                    var startGameMsg = msg.substring(i+1, msg.length).trim().toLowerCase();
+        
+                    // if they said
+                    if(startGameMsg === "start game"){
+                        io.emit("chat message", "Game on!");
+                        aRound();
+                        isGameReady = false;
+                        
+                    }
+                }
+            }
+        }
+
+        if(!isGameReady){
+            for(i=0; i<msg.length; i++){
+                if(msg.charAt(i) === ":"){
+                    var startGameMsg = msg.substring(i+1, msg.length).trim().toLowerCase();
+        
+                    // if they said
+                    if(startGameMsg === "end game"){
+                        io.emit("chat message", "Game ended!");
+                        isGameReady = true;
+                        round = 0;
+                    }
+                }
+            }
+        }
+
     });
 
     socket.on("clear", function (data) {
@@ -138,33 +173,26 @@ io.sockets.on("connection", function(socket){
         var exists = false;
         var userObj = {};
         console.log("users got hit on socket. ");
-        for (i = 0; i < users.length; i++) {
-            if (users[i].username === username) {
-                users[i].socketID.push(socket.id);
-                exists = true;
-            }
-        }
-
-        if (!exists) {
-            userObj = {
-                username: username,
-                socketID: [socket.id]
-            };
-            users.push(userObj);
-            console.log(users.length);
-        }
+ 
+        userObj = {
+            username: username,
+            socketID: socket.id
+        };
+        users.push(userObj);
+        console.log(users.length);
+        
         console.log(users);
 
-        // check if we have 2 users to start the game. Added exists here cause username gets hit 2 times with same user which causes this to run twice... sloopy code but works so far. 
-        if(users.length === 2){
-            // start the fisrt round. 
-            console.log("first round has started.");
-            aRound();
-        }
    })
 
     socket.on("disconnect", (reason) => {
         console.log("user disconnected - " + reason);
+        // when a user disconnects we need to remove them from the list. 
+        for(i=0; i<users.length; i++){
+            if(users[i].socketID = socket.id){
+                users.splice(i,1)
+            }
+        }
     });
 
 });

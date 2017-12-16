@@ -28,7 +28,7 @@ $( () => {
             username = $("#username").val().trim();
             setUsername();
         }
-            console.log(username + "changeee" );
+            console.log(username);
         
     });
     //Prevents input from having injected markup
