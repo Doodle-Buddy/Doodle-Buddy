@@ -219,61 +219,44 @@ init();
 const Chance = __webpack_require__(3)
 const chance = new Chance();
 
-$( () => {
+$(() => {
     var username;
     $('#username-form').submit(false);
-    
+
     // initialize the moddal 
-    $('.modal').modal(
-        {
-            dismissible: false // Modal can be dismissed by clicking outside of the modal
-        }
-    );
+    $('.modal').modal({
+        dismissible: false // Modal can be dismissed by clicking outside of the modal
+    });
     // open the model 
     $('#modal1').modal('open');
     // on click we need to grab what the user put and if its  blank we give him a Chance.first();
-    
-    $("#submit-btn").on("click", function(e){
+
+    $("#submit-btn").on("click", function (e) {
         e.preventDefault();
         // checck if the form was blank. 
-    
-        if($("#username").val().trim() === ""){
-            username = chance.first();
 
-            setUsername();
+        if ($("#username").val().trim() === "") {
+            username = chance.first();
         } else {
             username = $("#username").val().trim();
-            setUsername();
         }
-            console.log(username);
-        
-    });
-    //Prevents input from having injected markup
-    const cleanInput = input => {
-        return $('<div/>').text(input).html();
-    };
+        // how can i get this username and use it from another js file? -- make a constructor and then call that function to run this code about the modal else where??? 
+        console.log(username);
 
-    const setUsername = () => {
-        username = cleanInput(username);
-
-        if (username) {
-            socket.emit('add user', username);
-        }
-    };
-
-    //Grabs chat message and emits to socket
-    $('form').submit(function (e) {
-        let message = inputMessage.val();
-        message = cleanInput(message);
-        $("#m").val("");
-        socket.emit('chat message', username + ": " + message);
-        e.preventDefault();
-        
-    });
-    socket.on('chat message', function (msg) {
-
-        $('#messages').append($('<li>').text(msg));
-        
+        $.ajax("/api/users/", {
+            type: "POST",
+            dataType: "json",
+            data: {
+                username: username
+            }
+        }).then(
+            function () {
+                var event = new CustomEvent('userCreated', {
+                    detail: username
+                });
+                window.dispatchEvent(event);
+            }
+        );
 
     });
 
@@ -9695,9 +9678,10 @@ $(function () {
         socket.emit("username", username);
     });
 
-    $('form').submit(function () {
+    $('form').submit(function (e) {
+        e.preventDefault();
 
-        console.log(username + " this si the user name!")
+        console.log(username + " this is the user name!")
 
         socket.emit('chat message', username + ": " + $('#m').val());
         $('#m').val('');

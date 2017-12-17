@@ -10,9 +10,10 @@ $(function () {
         socket.emit("username", username);
     });
 
-    $('form').submit(function () {
+    $('form').submit(function (e) {
+        e.preventDefault();
 
-        console.log(username + " this si the user name!")
+        console.log(username + " this is the user name!")
 
         socket.emit('chat message', username + ": " + $('#m').val());
         $('#m').val('');
