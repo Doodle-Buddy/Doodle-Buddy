@@ -1,10 +1,10 @@
 {
-  "name": "Doodle-Buddy",
+  "name": "doodle-buddy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "build": "webpack",
     "start": "node server.js"
   },
