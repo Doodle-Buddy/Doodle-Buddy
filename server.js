@@ -117,7 +117,7 @@ io.sockets.on("connection", function(socket){
             }
             else{
                 io.emit("chat message", "Game is over.");
-                isGameStarted = false;
+                isGameReady = false;
             }
         });
     }
