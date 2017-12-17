@@ -1,6 +1,8 @@
 # Doodle Buddy
 
 ---
+[![Build Status](https://travis-ci.org/Doodle-Buddy/Doodle-Buddy.svg?branch=master)](https://travis-ci.org/Doodle-Buddy/Doodle-Buddy)
+[![Coverage Status](https://coveralls.io/repos/github/Doodle-Buddy/Doodle-Buddy/badge.svg?branch=master)](https://coveralls.io/github/Doodle-Buddy/Doodle-Buddy?branch=master)
 
 Doodle Buddy is a game where a player is prompted with a game word in which the player attempts to draw. The other players in the room attempt to guess the object being drawn. This app utilizes Websockets via Socket.io, uses a MySQL as a database, is rendered using Handlebars, and is served by Express.
 
